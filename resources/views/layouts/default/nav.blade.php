@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark main-dark-purple-bgd py-1">
     <a class="navbar-brand" href="/">
-        <img src="/img/logo_without_bgd.svg" width="40">
+        <img src="{{ asset('storage/img/logo_without_bgd.svg') }}" width="40">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

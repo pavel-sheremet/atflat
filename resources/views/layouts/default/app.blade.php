@@ -7,7 +7,7 @@
     <title>@yield('title', __('main.title'))</title>
     <meta name="description" content="@yield('description', __('main.description'))">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="icon" type="image/png" href="/img/favicon.png"/>
+    <link rel="icon" type="image/png" href="{{ asset('storage/img/favicon.png') }}"/>
 </head>
 <body class="main-dark-purple-bgd">
 <div id="app">
