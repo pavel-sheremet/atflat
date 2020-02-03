@@ -3,6 +3,106 @@
 
 // Variables
 @import 'variables';
+@import "classes";
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+*{
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+body{
+    background-color: $main-white;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: $main-light-purple;
+    border-color: $main-light-purple;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: $main-light-purple-d;
+    border-color: $main-light-purple-l;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+    color: #fff;
+    background-color: $main-light-purple-d;
+    border-color: $main-light-purple-l;
+    box-shadow: 0 0 0 0.2rem $main-light-purple-l-transparent;
+}
+
+.btn-primary.disabled,
+.btn-primary:disabled {
+    color: #fff;
+    background-color: $main-light-purple-l-transparent;
+    border-color: $main-light-purple-l;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: $main-light-purple-d;
+    border-color: $main-light-purple-l;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem $main-light-purple-l-transparent;
+}
+
+.btn-link {
+    font-weight: 400;
+    color: $main-light-purple;
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    color: $main-light-purple-d;
+    text-decoration: underline;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: $main-light-purple-l;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem $main-light-purple-l-transparent;
+}
+
+.carousel-center-item {
+    position: relative;
+    height: 300px;
+}
+
+.carousel-center-item img {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+input.image-check-input
+{
+    position: absolute;
+    left: 26px;
+    top: 3px;
+    z-index: 999999;
+    height: 20px;
+    width: 20px;
+}
+
