@@ -1,4 +1,4 @@
-@extends('layouts.default.app')
+@extends('layouts.app')
 
 @section('title', __('main.title'))
 @section('title', __('main.description'))
