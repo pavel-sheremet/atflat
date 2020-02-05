@@ -32,4 +32,5 @@ Route::group([
         ->middleware('is.agent')
         ->name('agent.profile');
     Route::get('/create', 'AgentController@create')->name('agent.create');
+    Route::post('/store', 'AgentController@store')->name('agent.store');
 });
