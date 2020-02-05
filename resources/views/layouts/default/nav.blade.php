@@ -11,9 +11,15 @@
 
         <ul class="navbar-nav w-100">
 
-            <li class="nav-item mr-auto @if (Route::currentRouteNamed('welcome')) active @endif">
+            <li class="nav-item @if (Route::currentRouteNamed('welcome')) active @endif">
                 <a class="nav-link" href="{{ route('welcome') }}">{{ __('menu.main') }}</a>
             </li>
+
+            <li class="nav-item @if (Route::currentRouteNamed('agency')) active @endif">
+                <a class="nav-link" href="{{ route('agency') }}">{{ __('agency.nav') }}</a>
+            </li>
+
+            <li class="nav-item mr-auto"></li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle"
