@@ -17,7 +17,7 @@
             </div>
         @endif
 
-        @if ($agencies)
+        @if (count($agencies))
             <div class="col-md-6">
                 <div class="card mb-2">
                     <div class="card-header">{{ __('profile.my_agencies') }}</div>
