@@ -18,3 +18,8 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/profile', 'UserController@profile')->name('profile')->middleware('verified');
+
+Route::prefix('agency')->group(function () {
+    Route::get('/', 'AgencyController@index')->name('agency');
+    Route::get('/{agency}', 'AgencyController@show')->name('agency.show');
+});
