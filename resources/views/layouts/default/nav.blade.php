@@ -44,6 +44,9 @@
                             <a class="dropdown-item" href="{{ route('register') }}">{{ __('menu.register') }}</a>
                         @endif
                     @else
+                        @if (!Route::currentRouteNamed('agent.profile'))
+                            <a class="dropdown-item" href="{{ route('agent.profile') }}">{{ __('agent.nav') }}</a>
+                        @endif
                         @if (!Route::currentRouteNamed('profile'))
                             <a class="dropdown-item" href="{{ route('profile') }}">{{ __('auth.profile') }}</a>
                         @endif
