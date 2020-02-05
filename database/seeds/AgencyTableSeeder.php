@@ -1,6 +1,6 @@
 <?php
 
-use App\Agency;
+use App\{Agency, User};
 use Illuminate\Database\Seeder;
 
 class AgencyTableSeeder extends Seeder
@@ -12,12 +12,17 @@ class AgencyTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = \App\User::where('email', 'pavel-sheremet-dev@yandex.ru')->first();
+        $user = User::where('email', 'pavel-sheremet-dev@yandex.ru')->first();
 
         if ($user)
         {
             $agency = new Agency();
             $agency->name = 'Atflat';
+            $agency->user_id = $user->id;
+            $agency->save();
+
+            $agency = new Agency();
+            $agency->name = 'Atflat 2';
             $agency->user_id = $user->id;
             $agency->save();
         }
