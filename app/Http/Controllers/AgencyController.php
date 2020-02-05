@@ -14,7 +14,11 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        //
+        $agencies = Agency::where('active', true)->get();
+
+        return view('agency.index', [
+            'agencies' => $agencies
+        ]);
     }
 
     /**
