@@ -38,8 +38,8 @@
                             <a class="dropdown-item" href="{{ route('register') }}">{{ __('menu.register') }}</a>
                         @endif
                     @else
-                        @if (!Route::currentRouteNamed('home'))
-                            <a class="dropdown-item" href="{{ route('home') }}">{{ __('auth.profile') }}</a>
+                        @if (!Route::currentRouteNamed('profile'))
+                            <a class="dropdown-item" href="{{ route('profile') }}">{{ __('auth.profile') }}</a>
                         @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
