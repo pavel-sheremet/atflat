@@ -29,7 +29,7 @@
                         {{ __('auth.profile') }}
                     @endauth
                 </a>
-                <div class="dropdown-menu" aria-labelledby="profileNavBarDropDownLink">
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileNavBarDropDownLink">
                     @guest
                         @if (!Route::currentRouteNamed('login'))
                             <a class="dropdown-item" href="{{ route('login') }}">{{ __('menu.login') }}</a>
