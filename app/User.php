@@ -41,4 +41,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Agency::class, 'id', 'user_id');
     }
+
+    public function isAgent ()
+    {
+        return Agent::where('user_id', \Auth::id())->get()->isNotEmpty();
+    }
 }
