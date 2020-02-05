@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Agency;
 use App\Agent;
+use App\Http\Requests\StoreAgent;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller
@@ -24,7 +26,11 @@ class AgentController extends Controller
      */
     public function create()
     {
-        //
+        $agencies = Agency::where('active', true)->get();
+
+        return view('agent.create', [
+            'agencies' => $agencies
+        ]);
     }
 
     /**
@@ -33,9 +39,14 @@ class AgentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAgent $request)
     {
-        //
+        $agent = new Agent();
+        $agent->user_id = \Auth::id();
+        $agent->agency_id = $request->agency_id;
+        $agent->save();
+
+        return redirect()->route('agent.profile');
     }
 
     /**
@@ -47,6 +58,11 @@ class AgentController extends Controller
     public function show(Agent $agent)
     {
         //
+    }
+
+    public function profile()
+    {
+        return view('agent.profile');
     }
 
     /**
