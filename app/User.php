@@ -36,4 +36,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function agencies ()
+    {
+        return $this->belongsTo(Agency::class, 'id', 'user_id');
+    }
 }
