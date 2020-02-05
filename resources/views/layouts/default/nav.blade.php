@@ -9,9 +9,9 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav w-100">
 
-            <li class="nav-item @if (Route::currentRouteNamed('welcome')) active @endif">
+            <li class="nav-item mr-auto @if (Route::currentRouteNamed('welcome')) active @endif">
                 <a class="nav-link" href="{{ route('welcome') }}">{{ __('menu.main') }}</a>
             </li>
 
