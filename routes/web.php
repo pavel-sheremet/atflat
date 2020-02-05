@@ -23,3 +23,13 @@ Route::prefix('agency')->group(function () {
     Route::get('/', 'AgencyController@index')->name('agency');
     Route::get('/{agency}', 'AgencyController@show')->name('agency.show');
 });
+
+Route::group([
+    'prefix' => 'agent',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/profile', 'AgentController@profile')
+        ->middleware('is.agent')
+        ->name('agent.profile');
+    Route::get('/create', 'AgentController@create')->name('agent.create');
+});
