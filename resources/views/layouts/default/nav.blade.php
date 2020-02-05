@@ -18,7 +18,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle"
                    href="#"
-                   id="navbarDropdownMenuLink"
+                   id="profileNavBarDropDownLink"
                    data-toggle="dropdown"
                    aria-haspopup="true"
                    aria-expanded="false"
@@ -29,7 +29,7 @@
                         {{ __('auth.profile') }}
                     @endauth
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <div class="dropdown-menu" aria-labelledby="profileNavBarDropDownLink">
                     @guest
                         @if (!Route::currentRouteNamed('login'))
                             <a class="dropdown-item" href="{{ route('login') }}">{{ __('menu.login') }}</a>
@@ -38,6 +38,9 @@
                             <a class="dropdown-item" href="{{ route('register') }}">{{ __('menu.register') }}</a>
                         @endif
                     @else
+                        @if (!Route::currentRouteNamed('home'))
+                            <a class="dropdown-item" href="{{ route('home') }}">{{ __('auth.profile') }}</a>
+                        @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('menu.logout') }}
