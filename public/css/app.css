@@ -11484,6 +11484,13 @@ body {
   max-width: 100%;
 }
 
+.dropdown-item .active,
+.dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
+  background-color: #986c73;
+}
+
 a {
   color: #b6868e;
 }
