@@ -23,10 +23,6 @@ class UserController extends Controller
      */
     public function profile()
     {
-        $agencies = \Auth::user()->agencies()->get();
-
-        return view('user.profile', [
-            'agencies' => $agencies
-        ]);
+        return view('user.profile');
     }
 }
