@@ -44,10 +44,9 @@
                             <a class="dropdown-item" href="{{ route('register') }}">{{ __('menu.register') }}</a>
                         @endif
                     @else
-                        <a class="dropdown-item" href="{{ route('agent.profile') }}">{{ __('agent.nav') }}</a>
-                        @if (!Route::currentRouteNamed('profile'))
-                            <a class="dropdown-item" href="{{ route('profile') }}">{{ __('auth.profile') }}</a>
-                        @endif
+                        <a class="dropdown-item" href="{{ route('agent.profile') }}">{{ __('agent.page.profile.nav') }}</a>
+                        <a class="dropdown-item" href="{{ route('agency.profile') }}">{{ __('agency.page.profile.nav') }}</a>
+                        <a class="dropdown-item" href="{{ route('profile') }}">{{ __('user.page.profile.nav') }}</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('menu.logout') }}
