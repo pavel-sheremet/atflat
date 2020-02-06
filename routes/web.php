@@ -22,6 +22,7 @@ Route::get('/profile', 'UserController@profile')->name('profile')->middleware('v
 
 Route::group(['prefix' => 'agency'], function () {
     Route::group(['middleware' => ['auth']], function () {
+        Route::get('/create', 'AgencyController@create')->name('agency.create');
         Route::get('/profile', 'AgencyController@profile')->name('agency.profile');
         Route::get('/profile/{agency}', 'AgencyController@profileShow')->name('agency.profile.show');
     });
