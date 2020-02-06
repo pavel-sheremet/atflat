@@ -21,6 +21,20 @@ class AgencyController extends Controller
         ]);
     }
 
+    public function profile()
+    {
+        $agencies = \Auth::user()->agencies()->get();
+
+        return view('agency.profile.index', [
+            'agencies' => $agencies
+        ]);
+    }
+
+    public function profileShow(Agency $agency)
+    {
+        dd('agency profile show');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
