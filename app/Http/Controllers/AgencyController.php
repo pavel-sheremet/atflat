@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Agency;
+use App\Http\Requests\StoreAgency;
 use Illuminate\Http\Request;
 
 class AgencyController extends Controller
@@ -32,7 +33,16 @@ class AgencyController extends Controller
 
     public function profileShow(Agency $agency)
     {
-        dd('agency profile show');
+        /**
+         * TODO: сделать редирект в случае unauthorized
+         * https://laracasts.com/discuss/channels/laravel/policy-authorize-redirect-instead-of-403?page=0
+         */
+        $this->authorize('viewProfile', $agency);
+
+        return view('agency.profile.show', [
+            'agency' => $agency,
+        ]);
+
     }
 
     /**
@@ -51,9 +61,14 @@ class AgencyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAgency $request)
     {
-        //
+        $agency = new Agency();
+        $agency->name = $request->name;
+        $agency->user_id = \Auth::id();
+        $agency->save();
+
+        return redirect()->route('agency.profile');
     }
 
     /**

@@ -20,11 +20,6 @@ class AgencyTableSeeder extends Seeder
             $agency->name = 'Atflat';
             $agency->user_id = $user->id;
             $agency->save();
-
-            $agency = new Agency();
-            $agency->name = 'Atflat 2';
-            $agency->user_id = $user->id;
-            $agency->save();
         }
     }
 }

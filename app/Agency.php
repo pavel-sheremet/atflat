@@ -10,4 +10,9 @@ class Agency extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function agents ()
+    {
+        return $this->hasMany(Agent::class, 'agency_id', 'id');
+    }
 }

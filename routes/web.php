@@ -23,8 +23,12 @@ Route::get('/profile', 'UserController@profile')->name('profile')->middleware('v
 Route::group(['prefix' => 'agency'], function () {
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/create', 'AgencyController@create')->name('agency.create');
-        Route::get('/profile', 'AgencyController@profile')->name('agency.profile');
-        Route::get('/profile/{agency}', 'AgencyController@profileShow')->name('agency.profile.show');
+        Route::post('/store', 'AgencyController@store')->name('agency.store');
+
+        Route::group(['prefix' => '/profile'], function () {
+            Route::get('/', 'AgencyController@profile')->name('agency.profile');
+            Route::get('/{agency}', 'AgencyController@profileShow')->name('agency.profile.show');
+        });
     });
 
     Route::get('/', 'AgencyController@index')->name('agency');
@@ -32,8 +36,10 @@ Route::group(['prefix' => 'agency'], function () {
 });
 
 Route::group(['prefix' => 'agent'], function () {
+    Route::get('/{agent}', 'AgentController@show')->name('agent.show');
+    // TODO: сделать мидлваре на проверку причастности пользователя агенству
     Route::group(['middleware' => ['auth']], function () {
-        Route::get('/profile', 'AgentController@profile')->name('agent.profile')->middleware('is.agent');
+        Route::get('/profile', 'AgentController@profile')->name('agent.profile');
         Route::get('/create', 'AgentController@create')->name('agent.create');
         Route::post('/store', 'AgentController@store')->name('agent.store');
     });
