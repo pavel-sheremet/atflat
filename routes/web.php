@@ -40,11 +40,16 @@ Route::group(['prefix' => 'agency'], function () {
 });
 
 Route::group(['prefix' => 'agent'], function () {
-    Route::get('/{agent}', 'AgentController@show')->name('agent.show');
-    // TODO: сделать мидлваре на проверку причастности пользователя агенству
     Route::group(['middleware' => ['auth']], function () {
-        Route::get('/profile', 'AgentController@profile')->name('agent.profile');
-        Route::get('/create', 'AgentController@create')->name('agent.create');
-        Route::post('/store', 'AgentController@store')->name('agent.store');
+        Route::group(['prefix' => '/profile'], function () {
+            Route::get('/', 'Agent\ProfileController@index')->name('agent.profile');
+
+        });
+
+        Route::get('/create', 'Agent\AgentController@create')->name('agent.create');
+        Route::post('/store', 'Agent\AgentController@store')->name('agent.store');
     });
+
+    Route::get('/', 'Agent\AgentController@index')->name('agent.index');
+    Route::get('/{agent}', 'Agent\AgentController@show')->name('agent.show');
 });
