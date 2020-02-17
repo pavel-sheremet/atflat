@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Agency;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use function HighlightUtilities\getAvailableStyleSheets;
 
 class AgencyPolicy
 {
@@ -19,7 +18,7 @@ class AgencyPolicy
      */
     public function viewAny(User $user)
     {
-        return false;
+        //
     }
 
     /**
@@ -29,9 +28,9 @@ class AgencyPolicy
      * @param  \App\Agency  $agency
      * @return mixed
      */
-    public function view(User $user, Agency $agency)
+    public function viewProfile(User $user, Agency $agency)
     {
-        return false;
+        return $user->isAgencyOwner($agency) || $user->isAgencyAgent($agency);
     }
 
     /**
@@ -42,7 +41,7 @@ class AgencyPolicy
      */
     public function create(User $user)
     {
-        return false;
+        //
     }
 
     /**
@@ -54,7 +53,7 @@ class AgencyPolicy
      */
     public function update(User $user, Agency $agency)
     {
-        return false;
+        //
     }
 
     /**
@@ -66,7 +65,7 @@ class AgencyPolicy
      */
     public function delete(User $user, Agency $agency)
     {
-        return false;
+        //
     }
 
     /**
@@ -78,7 +77,7 @@ class AgencyPolicy
      */
     public function restore(User $user, Agency $agency)
     {
-        return false;
+        //
     }
 
     /**
@@ -90,11 +89,6 @@ class AgencyPolicy
      */
     public function forceDelete(User $user, Agency $agency)
     {
-        return false;
-    }
-
-    public function viewProfile(User $user, Agency $agency)
-    {
-        return $user->isAgencyOwner($agency) || $user->isAgencyAgent($agency);
+        //
     }
 }

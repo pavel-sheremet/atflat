@@ -26,17 +26,17 @@ Route::get('/profile', 'UserController@profile')->name('profile')->middleware('v
 
 Route::group(['prefix' => 'agency'], function () {
     Route::group(['middleware' => ['auth']], function () {
-        Route::get('/create', 'AgencyController@create')->name('agency.create');
-        Route::post('/store', 'AgencyController@store')->name('agency.store');
+        Route::get('/create', 'Agency\AgencyController@create')->name('agency.create');
+        Route::post('/store', 'Agency\AgencyController@store')->name('agency.store');
 
         Route::group(['prefix' => '/profile'], function () {
-            Route::get('/', 'AgencyController@profile')->name('agency.profile');
-            Route::get('/{agency}', 'AgencyController@profileShow')->name('agency.profile.show');
+            Route::get('/', 'Agency\ProfileController@index')->name('agency.profile');
+            Route::get('/{agency}', 'Agency\ProfileController@show')->name('agency.profile.show');
         });
     });
 
-    Route::get('/', 'AgencyController@index')->name('agency');
-    Route::get('/{agency}', 'AgencyController@show')->name('agency.show');
+    Route::get('/', 'Agency\AgencyController@index')->name('agency');
+    Route::get('/{agency}', 'Agency\AgencyController@show')->name('agency.show');
 });
 
 Route::group(['prefix' => 'agent'], function () {
