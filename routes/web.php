@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('403', function () {
+    return view('exception.403');
+})->name('403');
+
 Auth::routes(['verify' => true]);
 
 Route::get('/profile', 'UserController@profile')->name('profile')->middleware('verified');
