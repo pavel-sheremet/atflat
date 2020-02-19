@@ -1,27 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Agent;
+namespace App\Http\Controllers\API\Agency;
 
-use App\Agency;
-use App\Agent;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAgent;
+use App\Agency;
+use App\Http\Resources\AgencyCollection;
 use Illuminate\Http\Request;
 
-class AgentController extends Controller
+class AgencyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return AgencyCollection
      */
     public function index()
     {
-        $agents = Agent::where('active', true)->with('user')->get();
+        $agencies = new AgencyCollection(Agency::with('user')->get());
 
-        return view('agent.index', [
-            'agents' =>$agents
-        ]);
+        return $agencies;
     }
 
     /**
@@ -31,7 +28,7 @@ class AgentController extends Controller
      */
     public function create()
     {
-        return view('agent.create');
+        //
     }
 
     /**
@@ -40,39 +37,29 @@ class AgentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAgent $request)
+    public function store(Request $request)
     {
-        $agent = new Agent();
-        $agent->user_id = \Auth::id();
-        $agent->agency_id = $request->agency_id;
-        $agent->save();
-
-        return redirect()->route('agent.profile');
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Agent  $agent
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Agent $agent)
+    public function show($id)
     {
         //
-    }
-
-    public function profile()
-    {
-        return view('agent.profile');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Agent  $agent
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Agent $agent)
+    public function edit($id)
     {
         //
     }
@@ -81,10 +68,10 @@ class AgentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Agent  $agent
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Agent $agent)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -92,10 +79,10 @@ class AgentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Agent  $agent
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Agent $agent)
+    public function destroy($id)
     {
         //
     }

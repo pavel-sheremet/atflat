@@ -19,6 +19,10 @@
                 <a class="nav-link" href="{{ route('agency') }}">{{ __('agency.nav') }}</a>
             </li>
 
+            <li class="nav-item @if (Route::currentRouteNamed('agent')) active @endif">
+                <a class="nav-link" href="{{ route('agent') }}">{{ __('agent.page.index.nav') }}</a>
+            </li>
+
             <li class="nav-item mr-auto"></li>
 
             <li class="nav-item dropdown">

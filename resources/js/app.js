@@ -6,7 +6,7 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue';
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,6 +20,11 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('agent-list-component', require('./components/AgentListComponent').default);
+Vue.component('agency-list-component', require('./components/AgencyListComponent').default);
+
+import VueInternationalization from 'vue-i18n';
+import Locale from './vue-i18n-locales.generated';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,6 +32,16 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.use(VueInternationalization);
+
+const lang = document.documentElement.lang.substr(0, 2);
+
+const i18n = new VueInternationalization({
+    locale: lang,
+    messages: Locale
+});
+
 const app = new Vue({
     el: '#app',
+    i18n
 });

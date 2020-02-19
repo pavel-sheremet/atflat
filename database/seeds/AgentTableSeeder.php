@@ -1,5 +1,6 @@
 <?php
 
+use App\Agency;
 use App\Agent;
 use App\User;
 use Illuminate\Database\Seeder;
@@ -13,15 +14,13 @@ class AgentTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::whereIn('name', ['Thomas Anderson', 'Mister Smith'])
-            ->select('id')
-            ->get();
-
-        foreach ($users as $user)
-        {
-            $agent = new Agent();
-            $agent->user_id = $user->id;
-            $agent->save();
-        }
+        factory(User::class, 10)
+            ->create()
+            ->each(function ($user) {
+                $agent = new Agent();
+                $agent->user_id = $user->id;
+                $agent->agency_id = rand(0, 1) ? Agency::all()->random(1)->first()->id : null;
+                $agent->save();
+            });
     }
 }

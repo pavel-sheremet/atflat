@@ -19,19 +19,5 @@ class UserTableSeeder extends Seeder
         $user->email_verified_at = Carbon::now();
         $user->password = bcrypt('12345678');
         $user->save();
-
-        $user = new User();
-        $user->name = 'Thomas Anderson';
-        $user->email = 'thomas-anderson@test.test';
-        $user->email_verified_at = Carbon::now();
-        $user->password = bcrypt('12345678');
-        $user->save();
-
-        $user = new User();
-        $user->name = 'Mister Smith';
-        $user->email = 'mister-smith@test.test';
-        $user->email_verified_at = Carbon::now();
-        $user->password = bcrypt('12345678');
-        $user->save();
     }
 }

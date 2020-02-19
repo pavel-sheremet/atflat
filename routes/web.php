@@ -11,6 +11,8 @@
 |
 */
 
+use App\Agent;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
@@ -50,6 +52,16 @@ Route::group(['prefix' => 'agent'], function () {
         Route::post('/store', 'Agent\AgentController@store')->name('agent.store');
     });
 
-    Route::get('/', 'Agent\AgentController@index')->name('agent.index');
+    Route::get('/', 'Agent\AgentController@index')->name('agent');
     Route::get('/{agent}', 'Agent\AgentController@show')->name('agent.show');
+});
+
+Route::group(['prefix' => 'api'], function () {
+    Route::group(['prefix' => 'agency'], function () {
+        Route::post('/', 'API\Agency\AgencyController@index');
+    });
+
+    Route::group(['prefix' => 'agent'], function () {
+        Route::post('/', 'API\Agent\AgentController@index');
+    });
 });

@@ -1,6 +1,6 @@
 <?php
 
-use App\{Agency, User};
+use App\{Agency, User, Agent};
 use Illuminate\Database\Seeder;
 
 class AgencyTableSeeder extends Seeder
@@ -21,5 +21,12 @@ class AgencyTableSeeder extends Seeder
             $agency->user_id = $user->id;
             $agency->save();
         }
+
+
+        $user = factory(User::class, 1)->create()->first();
+        $agency = new Agency();
+        $agency->name = 'Other';
+        $agency->user_id = $user->id;
+        $agency->save();
     }
 }
