@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Agent;
 
-use App\Agency;
 use App\Agent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAgent;
@@ -17,11 +16,7 @@ class AgentController extends Controller
      */
     public function index()
     {
-        $agents = Agent::where('active', true)->with('user')->get();
-
-        return view('agent.index', [
-            'agents' =>$agents
-        ]);
+        return view('agent.index');
     }
 
     /**

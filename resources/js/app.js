@@ -4,6 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 require('./bootstrap');
 
 import Vue from 'vue';
@@ -23,9 +24,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('agent-list-component', require('./components/AgentListComponent').default);
 Vue.component('agency-list-component', require('./components/AgencyListComponent').default);
 
+import store from './store';
 import VueInternationalization from 'vue-i18n';
 import Locale from './vue-i18n-locales.generated';
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -43,5 +44,6 @@ const i18n = new VueInternationalization({
 
 const app = new Vue({
     el: '#app',
-    i18n
+    i18n,
+    store
 });

@@ -15,60 +15,51 @@
 
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
-                            <li v-for="agent in agents" class="list-group-item px-0">
+                            <li class="list-group-item px-0" v-for="agent in AgentListStorage.agents">
                                 <a :href="agent.url">{{ agent.user.name }}</a>
                             </li>
                         </ul>
                     </div>
-                    <button v-if="links.next"
-                            v-on:click.prevent="setData(links.next)"
+
+                    <button v-if="AgentListStorage.links.next"
+                            v-on:click.prevent="setData(AgentListStorage.links.next)"
+                            :disabled="AgentListStorage.status.loading"
                             type="button"
-                            class="btn btn-primary">{{ this.$t('main.button.load_more')}}</button>
+                            class="btn btn-primary"
+                    >{{ this.$t('main.button.load_more')}}</button>
                 </div>
             </div>
+
         </div>
     </div>
 </template>
 
 <script>
+    import { mapState } from 'vuex';
+
     export default {
         name: "AgentsListComponent",
         data () {
-            return {
-                agents: [],
-                meta: [],
-                links: [],
-                url: '/api/agent'
-            }
+            return {}
+        },
+        computed: {
+            ...mapState({
+                MainStorage: state => state.MainStorage,
+                AgentListStorage: state => state.AgentListStorage,
+            })
         },
         mounted () {
             this.setData();
-            console.log(this.links)
         },
         methods: {
-            setData (url = this.url)
+            setData (url = null)
             {
-                axios.post(url)
-                    .then(response => {
-                        let responseData = response.data;
-                        this.meta = responseData.meta;
-                        this.links = responseData.links;
-
-                        let agents = responseData.data;
-
-                        agents.map((item) =>  {
-                            this.agents.push(item);
-                        })
-
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
+                this.$store.commit('AgentListStorage/setStatusLoading', true);
+                this.$store.dispatch('MainStorage/http', {
+                    url: url || this.AgentListStorage.url,
+                    mutation: 'AgentListStorage/setData'
+                });
             },
-            existMore ()
-            {
-
-            }
         }
     }
 </script>
