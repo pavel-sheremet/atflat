@@ -21,10 +21,12 @@ import Vue from 'vue';
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('agent-list-component', require('./components/AgentListComponent').default);
-Vue.component('agency-list-component', require('./components/AgencyListComponent').default);
+
+const lang = document.documentElement.lang.substr(0, 2);
+
 
 import store from './store';
+
 import VueInternationalization from 'vue-i18n';
 import Locale from './vue-i18n-locales.generated';
 /**
@@ -34,8 +36,6 @@ import Locale from './vue-i18n-locales.generated';
  */
 
 Vue.use(VueInternationalization);
-
-const lang = document.documentElement.lang.substr(0, 2);
 
 const i18n = new VueInternationalization({
     locale: lang,
