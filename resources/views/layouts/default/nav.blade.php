@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark main-dark-purple-bgd py-1">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top main-dark-purple-bgd py-1">
     <a class="navbar-brand" href="/">
         <img src="{{ asset('storage/img/logo_without_bgd.svg') }}" width="40">
     </a>

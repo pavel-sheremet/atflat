@@ -2,5 +2,17 @@
 @section('title', __('agency.page.index.title'))
 
 @section('content')
-    <agency-list-component></agency-list-component>
+
+    @component('layouts.default.filter.agency', [
+        'filters' => $filters,
+        'order' => $order,
+        'filtersNumber' => $filtersNumber,
+    ])
+    @endcomponent
+
+    @component('layouts.default.agency.index', [
+        'agencies' => $agencies,
+    ])
+    @endcomponent
+
 @endsection
