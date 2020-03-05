@@ -49,6 +49,6 @@ Route::group(['prefix' => 'agent'], function () {
         Route::post('/store', 'Agent\AgentController@store')->name('agent.store');
     });
 
-    Route::get('/', 'Agent\AgentController@index')->name('agent');
+    Route::get('/', 'Agent\AgentController@index')->name('agent')->middleware('clear.filter');
     Route::get('/{agent}', 'Agent\AgentController@show')->name('agent.show');
 });

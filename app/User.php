@@ -37,6 +37,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function getFullNameAttribute() {
+        return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
+    }
+
     public function agencies ()
     {
         return $this->belongsTo(Agency::class, 'id', 'user_id');

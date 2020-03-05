@@ -14,7 +14,8 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         $user = new User();
-        $user->name = 'Pavel Sheremet';
+        $user->first_name = 'Pavel';
+        $user->last_name = 'Sheremet';
         $user->email = 'pavel-sheremet-dev@yandex.ru';
         $user->email_verified_at = Carbon::now();
         $user->password = bcrypt('12345678');

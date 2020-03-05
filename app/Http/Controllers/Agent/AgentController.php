@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Agent;
+use App\Agency;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAgent;
+use App\Http\Requests\StoreAgent as StoreAgentRequest;
+use App\Http\Resources\Agency as AgencyResource;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Helpers\Request as RequestHelper;
+use App\Http\Resources\Agent as AgentResource;
 
 class AgentController extends Controller
 {
@@ -14,11 +19,21 @@ class AgentController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      */
     public function index(Request $request)
     {
-        return view('agent.index');
+        return view('agent.index', [
+            'agents' => AgentResource::collection(Agent::with('user')
+                ->filter($request)
+                ->order($request)
+                ->paginate(10)
+            ),
+            'agencies' => AgencyResource::collection(Agency::all()),
+            'filters' => RequestHelper::getFilters(),
+            'order' => RequestHelper::getOrder(),
+            'filtersNumber' => RequestHelper::getFiltersNumber()
+        ]);
     }
 
     /**
@@ -37,7 +52,7 @@ class AgentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return Response
      */
-    public function store(StoreAgent $request)
+    public function store(StoreAgentRequest $request)
     {
         $agent = new Agent();
         $agent->user_id = \Auth::id();

@@ -140,3 +140,45 @@ a
         color: $main-light-purple-d;
     }
 }
+
+.page-item
+{
+    .page-link
+    {
+        color: $main-light-purple;
+
+        &:active, &:focus
+        {
+            box-shadow: 0 0 0 0.2rem $main-light-purple-l-transparent;
+        }
+    }
+
+    &.active
+    {
+        .page-link
+        {
+            background-color: $main-light-purple;
+            border-color: $main-light-purple;
+        }
+    }
+}
+
+.nav-tabs
+{
+    .nav-link
+    {
+        &.active
+        {
+            background-color: #fff;
+            border-color: #fff;
+        }
+    }
+}
+
+option
+{
+    &:checked
+    {
+        background: red;
+    }
+}

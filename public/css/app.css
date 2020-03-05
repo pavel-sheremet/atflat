@@ -11504,3 +11504,26 @@ a:hover {
   color: #986c73;
 }
 
+.page-item .page-link {
+  color: #b6868e;
+}
+
+.page-item .page-link:active,
+.page-item .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(198, 150, 158, 0.5);
+}
+
+.page-item.active .page-link {
+  background-color: #b6868e;
+  border-color: #b6868e;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+option:checked {
+  background: red;
+}
+
