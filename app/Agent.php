@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agent extends Model
 {
+    protected $fillable = ['agency_id', 'user_id'];
+
     protected static function boot()
     {
         parent::boot();

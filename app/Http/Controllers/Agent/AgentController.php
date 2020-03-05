@@ -43,22 +43,21 @@ class AgentController extends Controller
      */
     public function create()
     {
-        return view('agent.create');
+        return view('agent.create', [
+            'agencies' => AgencyResource::collection(Agency::all()),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreAgentRequest $request
      * @return Response
      */
     public function store(StoreAgentRequest $request)
     {
         $agent = new Agent();
         $agent->create($request->validated());
-//        $agent->user_id = \Auth::id();
-//        $agent->agency_id = $request->agency_id;
-        $agent->save();
 
         return redirect()->route('agent.profile');
     }
@@ -93,7 +92,7 @@ class AgentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  \App\Agent  $agent
      * @return Response
      */
