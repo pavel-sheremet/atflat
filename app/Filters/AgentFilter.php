@@ -22,7 +22,7 @@ class AgentFilter extends AbstractFilter
         {
             case 'user_name' :
                 return $builder->join('users', 'agents.user_id', '=', 'users.id')
-                    ->orderBy('users.first_name', $this->getOrder()[1]);
+                    ->orderBy('users.name', $this->getOrder()[1]);
         }
 
     }

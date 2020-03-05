@@ -55,8 +55,9 @@ class AgentController extends Controller
     public function store(StoreAgentRequest $request)
     {
         $agent = new Agent();
-        $agent->user_id = \Auth::id();
-        $agent->agency_id = $request->agency_id;
+        $agent->create($request->validated());
+//        $agent->user_id = \Auth::id();
+//        $agent->agency_id = $request->agency_id;
         $agent->save();
 
         return redirect()->route('agent.profile');

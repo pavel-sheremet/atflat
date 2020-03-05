@@ -6,7 +6,7 @@
                     <ul class="list-group list-group-flush">
                         @foreach($agents as $agent)
                             <li class="list-group-item">
-                                <a href="{{ route('agent.show', ['agent' => $agent->id]) }}">{{ $agent->user->first_name }} {{ $agent->user->last_name }}</a>
+                                <a href="{{ route('agent.show', ['agent' => $agent->id]) }}">{{ $agent->user->fullName }}</a>
                             </li>
                         @endforeach
                     </ul>
