@@ -13,12 +13,18 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = new User();
-        $user->name = 'Pavel';
-        $user->last_name = 'Sheremet';
-        $user->email = 'pavel-sheremet-dev@yandex.ru';
-        $user->email_verified_at = Carbon::now();
-        $user->password = bcrypt('12345678');
-        $user->save();
+        return factory(User::class, 30)
+            ->make()
+            ->each(function ($faker) {
+                $user = new User();
+                $user->name = $faker->name;
+                $user->last_name = $faker->name;
+                $user->password = $faker->password;
+                $user->email = $faker->email;
+                $user->email_verified_at = $faker->email_verified_at;
+                $user->password = $faker->password;
+                $user->remember_token = $faker->remember_token;
+                $user->save();
+            });
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-use App\{Agency, User, Agent};
+use App\Agency;
 use Illuminate\Database\Seeder;
 
 class AgencyTableSeeder extends Seeder
@@ -12,21 +12,28 @@ class AgencyTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::where('email', 'pavel-sheremet-dev@yandex.ru')->first();
-
-        if ($user)
-        {
-            $agency = new Agency();
-            $agency->name = 'Atflat';
-            $agency->user_id = $user->id;
-            $agency->save();
-        }
-
-
-        $user = factory(User::class, 1)->create()->first();
-        $agency = new Agency();
-        $agency->name = 'Other';
-        $agency->user_id = $user->id;
-        $agency->save();
+        factory(Agency::class, 30)
+            ->make()
+            ->each(function ($faker) {
+                $agency = new Agency();
+                $agency->name = $faker->name;
+                $agency->user_id = $faker->user_id;
+                $agency->save();
+            });
+//
+//        if ($user)
+//        {
+//            $agency = new Agency();
+//            $agency->name = 'Atflat';
+//            $agency->user_id = $user->id;
+//            $agency->save();
+//        }
+//
+//
+//        $user = factory(User::class, 1)->create()->first();
+//        $agency = new Agency();
+//        $agency->name = 'Other';
+//        $agency->user_id = $user->id;
+//        $agency->save();
     }
 }
