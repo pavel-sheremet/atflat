@@ -11,7 +11,7 @@
             </button>
 
             <!-- Modal -->
-            <form action="{{ route('agency') }}" method="get">
+            <form action="{{ route(Route::currentRouteName()) }}" method="get">
 
                 <div class="modal fade" id="filter-modal" tabindex="-1" role="dialog" aria-labelledby="filter-modalTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">

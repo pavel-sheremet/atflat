@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Agent;
+namespace App\Http\Controllers\Agency\Agent;
 
-use App\Agent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -15,7 +14,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('profile.agent.show');
+        //
     }
 
     /**
@@ -25,6 +24,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**
@@ -82,5 +82,4 @@ class ProfileController extends Controller
     {
         //
     }
-
 }

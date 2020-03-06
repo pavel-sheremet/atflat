@@ -3,17 +3,26 @@
 namespace App\Http\Controllers\Agency;
 
 use App\Agency;
-use App\Http\Controllers\Controller;
+use App\Helpers\Request as RequestHelper;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Agency as AgencyResource;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $agencies = \Auth::user()->agencies()->get();
-
-        return view('agency.profile.index', [
-            'agencies' => $agencies
+        return view('profile.agency.index', [
+            'agencies' => AgencyResource::collection(
+                auth()->user()
+                    ->agencies()
+                    ->filter($request)
+                    ->order($request)
+                    ->paginate(10)
+            ),
+            'filters' => RequestHelper::getFilters(),
+            'order' => RequestHelper::getOrder(),
+            'filtersNumber' => RequestHelper::getFiltersNumber()
         ]);
     }
 
@@ -21,9 +30,8 @@ class ProfileController extends Controller
     {
         $this->authorize('viewProfile', $agency);
 
-        return view('agency.profile.show', [
+        return view('profile.agency.show', [
             'agency' => $agency,
         ]);
-
     }
 }

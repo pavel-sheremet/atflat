@@ -48,8 +48,8 @@
                             <a class="dropdown-item" href="{{ route('register') }}">{{ __('menu.register') }}</a>
                         @endif
                     @else
-                        <a class="dropdown-item" href="{{ route('agent.profile') }}">{{ __('agent.page.profile.nav') }}</a>
-                        <a class="dropdown-item" href="{{ route('agency.profile') }}">{{ __('agency.page.profile.index.nav') }}</a>
+                        <a class="dropdown-item" href="{{ route('profile.agent') }}">{{ __('agent.page.profile.nav') }}</a>
+                        <a class="dropdown-item" href="{{ route('profile.agency') }}">{{ __('agency.page.profile.index.nav') }}</a>
                         <a class="dropdown-item" href="{{ route('profile') }}">{{ __('user.page.profile.nav') }}</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

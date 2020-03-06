@@ -53,7 +53,7 @@ class AgencyController extends Controller
         $agency->user_id = \Auth::id();
         $agency->save();
 
-        return redirect()->route('agency.profile');
+        return redirect()->route('profile.agency');
     }
 
     /**

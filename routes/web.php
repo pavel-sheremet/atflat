@@ -21,17 +21,11 @@ Route::get('403', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/profile', 'UserController@profile')->name('profile')->middleware('verified');
 
 Route::group(['prefix' => 'agency'], function () {
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/create', 'Agency\AgencyController@create')->name('agency.create');
         Route::post('/store', 'Agency\AgencyController@store')->name('agency.store');
-
-        Route::group(['prefix' => '/profile'], function () {
-            Route::get('/', 'Agency\ProfileController@index')->name('agency.profile');
-            Route::get('/{agency}', 'Agency\ProfileController@show')->name('agency.profile.show');
-        });
     });
 
     Route::get('/', 'Agency\AgencyController@index')->name('agency');
@@ -40,10 +34,7 @@ Route::group(['prefix' => 'agency'], function () {
 
 Route::group(['prefix' => 'agent'], function () {
     Route::group(['middleware' => ['auth']], function () {
-        Route::group(['prefix' => '/profile'], function () {
-            Route::get('/', 'Agent\ProfileController@index')->name('agent.profile');
 
-        });
 
         Route::get('/create', 'Agent\AgentController@create')->name('agent.create');
         Route::post('/store', 'Agent\AgentController@store')->name('agent.store');
@@ -51,4 +42,28 @@ Route::group(['prefix' => 'agent'], function () {
 
     Route::get('/', 'Agent\AgentController@index')->name('agent')->middleware('clear.filter');
     Route::get('/{agent}', 'Agent\AgentController@show')->name('agent.show');
+});
+
+Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function () {
+    Route::get('/', 'UserController@profile')->name('profile')->middleware('verified');
+
+    Route::group(['prefix' => '/agency'], function () {
+        Route::get('/', 'Agency\ProfileController@index')->name('profile.agency');
+
+        Route::group(['prefix' => '/{agency}'], function () {
+            Route::get('/', 'Agency\ProfileController@show')->name('profile.agency.show');
+        });
+    });
+
+    Route::group(['prefix' => '/agent'], function () {
+        Route::get('/', 'Agent\ProfileController@index')->name('profile.agent');
+
+    });
+
+
+//        Route::group(['prefix' => '/agent'], function () {
+//            Route::get('/', 'Agency\Agent\ProfileController@index')->name('profile.agency.agent');
+//        });
+
+
 });

@@ -59,7 +59,7 @@ class AgentController extends Controller
         $agent = new Agent();
         $agent->create($request->validated());
 
-        return redirect()->route('agent.profile');
+        return redirect()->route('profile.agent');
     }
 
     /**
@@ -75,7 +75,7 @@ class AgentController extends Controller
 
     public function profile()
     {
-        return view('agent.profile');
+        return view('profile.agent');
     }
 
     /**
