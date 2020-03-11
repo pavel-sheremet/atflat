@@ -19,7 +19,7 @@ class AgencyFilter extends AbstractFilter
 
     public function order(Builder $builder)
     {
-        switch ($this->getOrder()[0])
+        switch ($this->getOrder()->get('name'))
         {
             case 'name' :
                 return $builder->orderBy('name', $this->getOrder()[1]);

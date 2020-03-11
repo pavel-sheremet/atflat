@@ -32,7 +32,7 @@ class AgentController extends Controller
             'agencies' => AgencyResource::collection(Agency::paginate(10, ['*'], 'agency_page')),
             'filters' => \RequestHelper::getFilters(),
             'order' => \RequestHelper::getOrder(),
-            'filters_number' => collect(\RequestHelper::getFiltersNumber()),
+            'filters_number' => \RequestHelper::getFiltersNumber(),
         ]);
     }
 

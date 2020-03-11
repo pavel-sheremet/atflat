@@ -45,7 +45,7 @@ class Request
             }
         }
 
-        return $result;
+        return collect($result);
     }
 
     static function getFiltersWithout ($name)

@@ -20,8 +20,6 @@ class AgentFilter extends AbstractFilter
 
     public function order(Builder $builder)
     {
-        if (!$this->getOrder()->has('name')) return $builder;
-
         switch ($this->getOrder()->get('name'))
         {
             case 'user_name' :
