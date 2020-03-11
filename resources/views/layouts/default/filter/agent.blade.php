@@ -3,17 +3,17 @@
         <div class="col-sm-12 pb-2">
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filter-modal">
-                {{ __('main.button.filter.toggle_btn') }} {{ $filtersNumber }}
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filter-modal-agent">
+                {{ __('main.button.filter.toggle_btn') }} {{ $filters_number->get($filter_name) }}
             </button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sort-modal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sort-modal-agent">
                 {{ __('main.button.sort.toggle_btn') }}
             </button>
 
             <!-- Modal -->
-            <form action="{{ route('agent') }}" method="get">
+            <form action="{{ url()->full() }}" method="get">
 
-            <div class="modal fade" id="filter-modal" tabindex="-1" role="dialog" aria-labelledby="filter-modalTitle" aria-hidden="true">
+            <div class="modal fade" id="filter-modal-agent" tabindex="-1" role="dialog" aria-labelledby="filter-modalTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                             <div class="modal-header">
@@ -28,27 +28,33 @@
                             <div class="modal-body">
                                 @component('layouts.default.filter.components.input.text', [
                                     'filters' => $filters,
+                                    'filter_name' => $filter_name,
                                     'code' => 'user_name'
                                 ])
                                 @endcomponent
-                                @component('layouts.default.filter.components.select', [
+                                @component('layouts.default.filter.components.input.select', [
                                     'filters' => $filters,
+                                    'filter_name' => $filter_name,
                                     'code' => 'agency_id',
                                     'multiple' => true,
                                     'items' => $agencies
                                 ])
                                 @endcomponent
                             </div>
+
+                            @component('layouts.default.filter.components.input.exclude', ['filter_name' => $filter_name])
+                            @endcomponent
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('main.button.close') }}</button>
                                 <button type="submit" class="btn btn-primary">{{ __('main.button.filter.submit') }}</button>
-                                <button type="submit" name="filter[clear]" class="btn btn-primary">{{ __('main.button.clear') }}</button>
+                                <button type="submit" name="filter[clear]" value="agent" class="btn btn-primary">{{ __('main.button.clear') }}</button>
                             </div>
                     </div>
                 </div>
             </div>
 
-            <div class="modal fade" id="sort-modal" tabindex="-1" role="dialog" aria-labelledby="filter-modalTitle" aria-hidden="true">
+            <div class="modal fade" id="sort-modal-agent" tabindex="-1" role="dialog" aria-labelledby="filter-modalTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                             <div class="modal-header">
@@ -65,9 +71,9 @@
                                         <label class="form-check-label">
                                             <input class="form-check-input"
                                                    type="radio"
-                                                   name="order"
-                                                   value="user_name:asc"
-                                                   @if ($order[0] == 'user_name' && $order[1] == 'asc') checked @endif
+                                                   name="order[{{ $filter_name }}][user_name]"
+                                                   value="asc"
+                                                   @if ($order->get($filter_name)['user_name'] == 'asc') checked @endif
                                             >
                                             {{ __('order.agent.user.name.asc') }}
                                         </label>
@@ -76,9 +82,9 @@
                                         <label class="form-check-label">
                                             <input class="form-check-input"
                                                    type="radio"
-                                                   name="order"
-                                                   value="user_name:desc"
-                                                   @if ($order[0] == 'user_name' && $order[1] == 'desc') checked @endif
+                                                   name="order[{{ $filter_name }}][user_name]"
+                                                   value="desc"
+                                                   @if ($order->get($filter_name)['user_name'] == 'desc') checked @endif
                                             >
                                             {{ __('order.agent.user.name.desc') }}
                                         </label>

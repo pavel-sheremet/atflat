@@ -6,7 +6,8 @@
     @component('layouts.default.filter.agency', [
         'filters' => $filters,
         'order' => $order,
-        'filtersNumber' => $filtersNumber,
+        'filters_number' => $filters_number,
+        'filter_name' => 'agency'
     ])
     @endcomponent
 

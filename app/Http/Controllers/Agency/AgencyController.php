@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Agency;
 
 use App\Agency;
-use App\Helpers\Request as RequestHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAgency;
 use App\Http\Resources\Agency as AgencyResource;
@@ -24,9 +23,9 @@ class AgencyController extends Controller
             'agencies' => AgencyResource::collection(Agency::filter($request)
                 ->order($request)
                 ->paginate(10)),
-            'filters' => RequestHelper::getFilters(),
-            'order' => RequestHelper::getOrder(),
-            'filtersNumber' => RequestHelper::getFiltersNumber()
+            'filters' => \RequestHelper::getFilters(),
+            'order' => \RequestHelper::getOrder(),
+            'filters_number' => collect(\RequestHelper::getFiltersNumber())
         ]);
     }
 

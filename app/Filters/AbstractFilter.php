@@ -5,14 +5,12 @@ namespace App\Filters;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
-use \App\Helpers\Request as RequestHelper;
 
 abstract class AbstractFilter
 {
     protected $request;
 
     protected $filters = [];
-    protected $order = [];
 
     public function __construct(Request $request)
     {
@@ -33,12 +31,27 @@ abstract class AbstractFilter
 
     protected function getOrder()
     {
-        return RequestHelper::getOrder();
+        $result = [];
+
+        $order_arr = \RequestHelper::getOrder()->get($this->name);
+
+        if ($order_arr)
+        {
+            $order_key = array_key_first($order_arr);
+
+            $result = [
+                'name' => $order_key,
+                'direction' => $order_arr[$order_key]
+            ];
+        }
+
+        return collect($result);
     }
 
     protected function getFilters()
     {
-        $filter = RequestHelper::getFilters();
+        $filters = \RequestHelper::getFilters();
+        $filter = $filters->has($this->name) ? $filters->get($this->name) : [];
 
         return array_filter($filter, function ($key) {
             return array_key_exists($key, $this->filters);

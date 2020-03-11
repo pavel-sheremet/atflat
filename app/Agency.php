@@ -4,9 +4,15 @@ namespace App;
 
 use App\Filters\AgencyFilter;
 use App\Scopes\ActiveScope;
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * class Agency
+ *
+ * @mixin Eloquent
+ */
 class Agency extends Model
 {
     protected static function boot()

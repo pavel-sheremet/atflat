@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Agency;
 
 use App\Agency;
-use App\Helpers\Request as RequestHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Agency as AgencyResource;
@@ -20,9 +19,9 @@ class ProfileController extends Controller
                     ->order($request)
                     ->paginate(10)
             ),
-            'filters' => RequestHelper::getFilters(),
-            'order' => RequestHelper::getOrder(),
-            'filtersNumber' => RequestHelper::getFiltersNumber()
+            'filters' => \RequestHelper::getFilters(),
+            'order' => \RequestHelper::getOrder(),
+            'filters_number' => \RequestHelper::getFiltersNumber()
         ]);
     }
 

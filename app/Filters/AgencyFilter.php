@@ -13,6 +13,8 @@ class AgencyFilter extends AbstractFilter
         'name' => NameFilter::class,
     ];
 
+    protected $name = 'agency';
+
     protected $order;
 
     public function order(Builder $builder)

@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Helpers\Request as RequestHelper;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -17,9 +16,9 @@ class ClearFilter
      */
     public function handle($request, Closure $next)
     {
-        if (RequestHelper::isClear())
+        if (\RequestHelper::isFilterClear())
         {
-            return redirect()->to(RequestHelper::getWithout(['filter']));
+            return redirect()->to(\RequestHelper::getClearedFilterFullUrl());
         }
 
         return $next($request);

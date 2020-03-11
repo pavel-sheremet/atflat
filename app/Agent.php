@@ -4,9 +4,15 @@ namespace App;
 
 use App\Filters\AgentFilter;
 use App\Scopes\ActiveScope;
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Agent
+ *
+ * @mixin Eloquent
+ */
 class Agent extends Model
 {
     protected $fillable = ['agency_id', 'user_id'];

@@ -10,7 +10,6 @@ use App\Http\Resources\Agency as AgencyResource;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Helpers\Request as RequestHelper;
 use App\Http\Resources\Agent as AgentResource;
 
 class AgentController extends Controller
@@ -27,12 +26,13 @@ class AgentController extends Controller
             'agents' => AgentResource::collection(Agent::with('user')
                 ->filter($request)
                 ->order($request)
-                ->paginate(10)
+                ->paginate(10, ['*'], 'agent_page')
             ),
-            'agencies' => AgencyResource::collection(Agency::all()),
-            'filters' => RequestHelper::getFilters(),
-            'order' => RequestHelper::getOrder(),
-            'filtersNumber' => RequestHelper::getFiltersNumber()
+            'agencies_filter' => AgencyResource::collection(Agency::all()),
+            'agencies' => AgencyResource::collection(Agency::paginate(10, ['*'], 'agency_page')),
+            'filters' => \RequestHelper::getFilters(),
+            'order' => \RequestHelper::getOrder(),
+            'filters_number' => collect(\RequestHelper::getFiltersNumber()),
         ]);
     }
 

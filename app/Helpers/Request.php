@@ -3,43 +3,63 @@
 
 namespace App\Helpers;
 
-
+/**
+ * Class Request
+ * @package App\Helpers
+ */
 class Request
 {
-    static function isClear ()
+    static function isFilterClear ()
     {
-        return !empty(self::getFilters()) && array_key_exists('clear', self::getFilters());
+        return self::getFilters()->has('clear');
     }
 
     static function getFilters ()
     {
-        return request()->get('filter') ?: [];
+        return collect(request()->get('filter') ?: []);
     }
 
     static function getOrder ()
     {
-        return explode(':', request()->get('order'));
+        return collect(request()->get('order'));
     }
 
     static function getFiltersNumber ()
     {
+        $result = [];
+
         if (!empty(self::getFilters()))
         {
-            return count(array_filter(self::getFilters(), function ($item) {
-                if (is_array($item))
-                {
-                    return !empty(array_diff($item, ['', false, null]));
-                }
+            foreach (self::getFilters() as $name => $filters)
+            {
+                if ($name == 'clear') continue;
 
-                return !empty($item);
-            }));
+                $result[$name] = count(array_filter($filters, function ($item) {
+                    if (is_array($item))
+                    {
+                        return !empty(array_diff($item, ['', false, null]));
+                    }
+
+                    return !empty($item);
+                }));
+            }
         }
 
-        return 0;
+        return $result;
     }
 
-    static function getWithout ($params)
+    static function getFiltersWithout ($name)
     {
-        return url()->current().'?'.http_build_query(request()->except($params));
+        return self::getFilters()->except($name);
+    }
+
+    static function getFullUrlWithoutFilter ($name)
+    {
+        return url()->current().'?'.http_build_query(['filter' => self::getFiltersWithout($name)->all()]);
+    }
+
+    static function getClearedFilterFullUrl ()
+    {
+        return self::getFullUrlWithoutFilter([self::getFilters()->get('clear'), 'clear']);
     }
 }

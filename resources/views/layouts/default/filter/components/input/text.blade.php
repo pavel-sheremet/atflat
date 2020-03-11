@@ -3,8 +3,8 @@
     <input type="text"
            class="form-control"
            aria-describedby="emailHelp"
-           value="{{ isset($filters[$code]) ? $filters[$code] : '' }}"
-           name="filter[{{ $code }}]"
+           value="{{ isset($filters[$filter_name][$code]) ? $filters[$filter_name][$code] : '' }}"
+           name="filter[{{ $filter_name }}][{{ $code }}]"
            placeholder="{{ $placeholder ?? __('filter.'.$code.'.input.placeholder') }}"
     >
 </div>
