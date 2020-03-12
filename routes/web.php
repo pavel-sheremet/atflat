@@ -34,8 +34,6 @@ Route::group(['prefix' => 'agency'], function () {
 
 Route::group(['prefix' => 'agent'], function () {
     Route::group(['middleware' => ['auth']], function () {
-
-
         Route::get('/create', 'Agent\AgentController@create')->name('agent.create');
         Route::post('/store', 'Agent\AgentController@store')->name('agent.store');
     });
@@ -52,6 +50,11 @@ Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function () {
 
         Route::group(['prefix' => '/{agency}'], function () {
             Route::get('/', 'Agency\ProfileController@show')->name('profile.agency.show');
+
+            Route::group(['prefix' => 'realty'], function () {
+                Route::get('/', 'Agency\Realty\ProfileController@index')->name('profile.agency.realty');
+                Route::get('/create', 'Agency\Realty\ProfileController@create')->name('profile.agency.realty.create');
+            });
         });
     });
 

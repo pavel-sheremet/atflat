@@ -5,7 +5,13 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Eloquent;
 
+/**
+ * Class User
+ * @package App
+ * @mixin Eloquent
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
@@ -49,6 +55,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function agent ()
     {
         return $this->belongsTo(Agent::class, 'id', 'user_id');
+    }
+
+    public function realty ()
+    {
+        return $this->hasMany(Realty::class, 'user_id', 'id');
     }
 
     public function isAgent ()

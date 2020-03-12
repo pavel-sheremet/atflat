@@ -43,4 +43,11 @@ class Agent extends Model
     {
         return $this->hasOne(Agency::class, 'id', 'agency_id');
     }
+
+    public function realty ()
+    {
+        return $this->hasManyThrough(Realty::class,User::class,  'id', 'user_id')
+            ->withoutGlobalScopes();
+
+    }
 }

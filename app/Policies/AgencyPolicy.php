@@ -13,7 +13,7 @@ class AgencyPolicy
     /**
      * Determine whether the user can view any agencies.
      *
-     * @param  \App\User  $user
+     * @param User $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -24,8 +24,8 @@ class AgencyPolicy
     /**
      * Determine whether the user can view the agency.
      *
-     * @param  \App\User  $user
-     * @param  \App\Agency  $agency
+     * @param User $user
+     * @param Agency $agency
      * @return mixed
      */
     public function viewProfile(User $user, Agency $agency)
@@ -36,7 +36,7 @@ class AgencyPolicy
     /**
      * Determine whether the user can create agencies.
      *
-     * @param  \App\User  $user
+     * @param User $user
      * @return mixed
      */
     public function create(User $user)
@@ -47,8 +47,8 @@ class AgencyPolicy
     /**
      * Determine whether the user can update the agency.
      *
-     * @param  \App\User  $user
-     * @param  \App\Agency  $agency
+     * @param User $user
+     * @param Agency $agency
      * @return mixed
      */
     public function update(User $user, Agency $agency)
@@ -59,8 +59,8 @@ class AgencyPolicy
     /**
      * Determine whether the user can delete the agency.
      *
-     * @param  \App\User  $user
-     * @param  \App\Agency  $agency
+     * @param User $user
+     * @param Agency $agency
      * @return mixed
      */
     public function delete(User $user, Agency $agency)
@@ -71,8 +71,8 @@ class AgencyPolicy
     /**
      * Determine whether the user can restore the agency.
      *
-     * @param  \App\User  $user
-     * @param  \App\Agency  $agency
+     * @param User $user
+     * @param Agency $agency
      * @return mixed
      */
     public function restore(User $user, Agency $agency)
@@ -83,8 +83,8 @@ class AgencyPolicy
     /**
      * Determine whether the user can permanently delete the agency.
      *
-     * @param  \App\User  $user
-     * @param  \App\Agency  $agency
+     * @param User $user
+     * @param Agency $agency
      * @return mixed
      */
     public function forceDelete(User $user, Agency $agency)

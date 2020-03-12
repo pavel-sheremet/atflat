@@ -13,7 +13,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        return factory(User::class, 30)
+        return factory(User::class, 50)
             ->make()
             ->each(function ($faker) {
                 $user = new User();

@@ -14,12 +14,12 @@ class AgentTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 300)
+        factory(User::class, 50)
             ->create()
             ->each(function ($user) {
                 $agent = new Agent();
                 $agent->user_id = $user->id;
-                $agent->agency_id = rand(0, 1) ? Agency::all()->random(1)->first()->id : null;
+                $agent->agency_id = rand(0, 1) ? Agency::inRandomOrder()->first()->id : null;
                 $agent->save();
             });
     }
