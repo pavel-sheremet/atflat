@@ -14,11 +14,6 @@ class AgencyCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            'agencies' => $this->collection,
-            'links' => [
-                'self' => 'link-value',
-            ],
-        ];
+        return parent::toArray($request);
     }
 }

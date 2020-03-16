@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Agency\Realty;
 
 use App\Agency;
-use App\Agent;
 use App\Http\Controllers\Controller;
-use App\Realty;
-use App\User;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use App\Http\Resources\Realty as RealtyResource;
+use App\Http\Resources\Agency as AgencyResource;
+use App\Http\Resources\Agent as AgentResource;
 
 class ProfileController extends Controller
 {
@@ -16,41 +16,41 @@ class ProfileController extends Controller
      * Display a listing of the resource.
      *
      * @param Agency $agency
+     * @param Request $request
      * @return void
+     * @throws AuthorizationException
      */
-    public function index(Agency $agency)
+    public function index(Agency $agency, Request $request)
     {
-        \DB::connection()->enableQueryLog();
-//        $realty = $agency->realty()
-//            ->withoutGlobalScopes()
-//            ->with('user', 'user.agent')
-//            ->get();
+        $this->authorize('viewProfile', $agency);
 
-        $agencies = Agency::with('realty')
-            ->withCount('realty')
-            ->orderBy('realty_count')
-            ->paginate(3);
-
-        foreach ($agencies as $agency)
-        {
-            dump($agency->name . ' - ' . $agency->realty->count());
-        }
-
-
-//        dump($realty);
-
-        dd(\DB::getQueryLog());
-
+        return view('profile.agency.realty.index', [
+            'realty' => RealtyResource::collection($agency->realty()
+                ->filter($request)
+//                ->order($request)
+                ->paginate(2, ['*'], 'realty_page')
+            ),
+            'agency' => new AgencyResource($agency),
+            'agents' => AgentResource::collection($agency->agents()->with('user')->get()),
+            'filter' => [
+                'number' => \RequestHelper::getFiltersNumber(),
+                'data' => \RequestHelper::getFilters(),
+            ]
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Agency $agency
+     * @return void
+     * @throws AuthorizationException
      */
-    public function create()
+    public function create(Agency $agency)
     {
-        //
+        $this->authorize('viewProfile', $agency);
+
+        return view();
     }
 
     /**

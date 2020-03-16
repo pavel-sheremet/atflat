@@ -15,6 +15,10 @@
                 <a class="nav-link" href="{{ route('welcome') }}">{{ __('menu.main') }}</a>
             </li>
 
+            <li class="nav-item @if (Route::currentRouteNamed('realty')) active @endif">
+                <a class="nav-link" href="{{ route('realty') }}">{{ __('realty.nav') }}</a>
+            </li>
+
             <li class="nav-item @if (Route::currentRouteNamed('agency')) active @endif">
                 <a class="nav-link" href="{{ route('agency') }}">{{ __('agency.nav') }}</a>
             </li>

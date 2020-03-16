@@ -5,8 +5,9 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Agency as AgencyResource;
+use App\Http\Resources\Agent as AgentResource;
 
-class Agent extends JsonResource
+class Realty extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,11 +19,9 @@ class Agent extends JsonResource
     {
         return [
             'id' => $this->id,
-            'agency_id' => $this->agency_id,
             'active' => $this->active,
-//            'url' => route('agent.show', ['agent' => $this->id]),
             'user' => new UserResource($this->whenLoaded('user')),
-            'agency' => new AgencyResource($this->whenLoaded('agency'))
+            'agency' => new AgencyResource($this->whenLoaded('agency')),
         ];
     }
 }

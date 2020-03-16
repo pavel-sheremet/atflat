@@ -16,4 +16,9 @@ class User extends JsonResource
     {
         return parent::toArray($request);
     }
+
+    public function agent ()
+    {
+        return $this->belongsTo(Agent::class, 'id', 'user_id');
+    }
 }

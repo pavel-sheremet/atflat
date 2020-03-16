@@ -32,7 +32,7 @@
                                         'code' => 'user_name'
                                     ])
                                     @endcomponent
-                                    @component('layouts.default.filter.components.input.select', [
+                                    @component('layouts.default.filter.components.input.select.agency', [
                                         'filters' => $filters,
                                         'filter_name' => $filter_name,
                                         'code' => 'agency_id',

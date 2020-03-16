@@ -32,7 +32,7 @@ class Agency extends Model
         return (new AgencyFilter($request))->order($builder);
     }
 
-    public function user ()
+    public function owner ()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
