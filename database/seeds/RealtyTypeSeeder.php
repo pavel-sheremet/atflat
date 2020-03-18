@@ -13,11 +13,11 @@ class RealtyTypeSeeder extends Seeder
     public function run()
     {
         $realtyType = new RealtyType();
-        $realtyType->name = 'Квартиры';
+        $realtyType->name = 'Квартира';
         $realtyType->save();
 
         $realtyType = new RealtyType();
-        $realtyType->name = 'Комнаты';
+        $realtyType->name = 'Комната';
         $realtyType->save();
     }
 }

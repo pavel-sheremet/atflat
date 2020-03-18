@@ -173,6 +173,16 @@ export default {
                     }
                 },
                 "index": {
+                    "filter": {
+                        "modal": {
+                            "title": "Фильтр агентов"
+                        }
+                    },
+                    "order": {
+                        "modal": {
+                            "title": "Сортировка агентов"
+                        }
+                    },
                     "title": "Список агентов",
                     "nav": "Агенты",
                     "block": {
@@ -198,10 +208,36 @@ export default {
                 "not_select": "Не выбрано"
             },
             "button": {
-                "load_more": "Загрузить ещё"
+                "load_more": "Загрузить ещё",
+                "clear": "Очистить",
+                "close": "Закрыть",
+                "filter": {
+                    "toggle_btn": "Фильтры",
+                    "submit": "Фильтровать"
+                },
+                "sort": {
+                    "toggle_btn": "Сотртировка",
+                    "submit": "Сортировать"
+                }
             },
             "403": {
                 "description": "У Вас недостаточно прав для просмотра данной страницы"
+            }
+        },
+        "order": {
+            "agent": {
+                "user": {
+                    "name": {
+                        "asc": "Имя агента(А > Я)",
+                        "desc": "Имя агента(Я > А)"
+                    }
+                }
+            },
+            "agency": {
+                "name": {
+                    "asc": "Название агенства(А > Я)",
+                    "desc": "Название агенства(Я > А)"
+                }
             }
         },
         "user": {
@@ -241,6 +277,11 @@ export default {
                                 }
                             }
                         }
+                    },
+                    "realty": {
+                        "create": {
+                            "title": "Добавить недвижимость"
+                        }
                     }
                 },
                 "create": {
@@ -265,10 +306,20 @@ export default {
                 },
                 "index": {
                     "title": "Список Агенств",
+                    "filter": {
+                        "modal": {
+                            "title": "Фильтр агенств"
+                        }
+                    },
                     "block": {
                         "agencies": {
                             "title": "Список агенств",
                             "description": "Здесь вы можете порсмотреть список агенств"
+                        },
+                        "order": {
+                            "modal": {
+                                "title": "Сортировка агенств"
+                            }
                         }
                     }
                 }
@@ -290,6 +341,14 @@ export default {
             "agency_id": {
                 "select": {
                     "label": "Выберите агество(а)"
+                }
+            },
+            "agency": {
+                "input": {
+                    "name": {
+                        "label": "Название",
+                        "placeholder": "Введите название"
+                    }
                 }
             }
         },
@@ -405,6 +464,29 @@ export default {
                 "password": "Пароль",
                 "name": "Имя",
                 "email": "E-Mail"
+            }
+        },
+        "realty": {
+            "nav": "Недвижимость",
+            "rooms_number": "{0} Студия ::: [1,7] {value} ::: [8,*] {value} и более",
+            "create": {
+                "input": {
+                    "type": {
+                        "label": "Тип недвижимости"
+                    },
+                    "rooms_number": {
+                        "label": "Количество комнат"
+                    },
+                    "price": {
+                        "label": "Арендная плата"
+                    },
+                    "sub_price": {
+                        "label": "Залог"
+                    },
+                    "description": {
+                        "label": "Описание"
+                    }
+                }
             }
         }
     }

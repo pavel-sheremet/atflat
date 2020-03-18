@@ -56,7 +56,7 @@ Route::get('403', function () {
 Auth::routes(['verify' => true]);
 
 
-Route::group(['prefix' => 'agency'], function () {
+Route::group(['prefix' => '/agency'], function () {
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/create', 'Agency\AgencyController@create')->name('agency.create');
         Route::post('/store', 'Agency\AgencyController@store')->name('agency.store');
@@ -78,7 +78,10 @@ Route::group(['prefix' => 'agent'], function () {
     Route::get('/{agent}', 'Agent\AgentController@show')->name('agent.show');
 });
 
-Route::group(['prefix' => 'realty'], function () {
+Route::group(['prefix' => '/realty'], function () {
+    Route::post('/create', 'API\RealtyController@create');
+    Route::post('/store', 'API\RealtyController@store')->middleware('auth');
+
     Route::get('/', 'RealtyController@index')->name('realty')->middleware('clear.filter');
 
     Route::get('/{realty}', 'RealtyController@show')->name('realty.show');
@@ -96,8 +99,11 @@ Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function () {
 
             Route::group(['prefix' => 'realty'], function () {
                 Route::get('/', 'Agency\Realty\ProfileController@index')->name('profile.agency.realty')->middleware('clear.filter');
-                Route::get('/{realty}', 'Agency\Realty\ProfileController@show')->name('profile.agency.realty.show');
                 Route::get('/create', 'Agency\Realty\ProfileController@create')->name('profile.agency.realty.create');
+
+
+
+                Route::get('/{realty}', 'Agency\Realty\ProfileController@show')->name('profile.agency.realty.show');
             });
         });
     });
@@ -106,11 +112,4 @@ Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function () {
         Route::get('/', 'Agent\ProfileController@index')->name('profile.agent');
 
     });
-
-
-//        Route::group(['prefix' => '/agent'], function () {
-//            Route::get('/', 'Agency\Agent\ProfileController@index')->name('profile.agency.agent');
-//        });
-
-
 });

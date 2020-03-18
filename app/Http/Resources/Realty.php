@@ -20,8 +20,13 @@ class Realty extends JsonResource
         return [
             'id' => $this->id,
             'active' => $this->active,
+            'created_at' => $this->created_at,
+            'price' => $this->price,
+            'sub_price' => $this->sub_price,
+            'description' => $this->description,
             'user' => new UserResource($this->whenLoaded('user')),
             'agency' => new AgencyResource($this->whenLoaded('agency')),
+            'public_url' => route('realty.show', ['realty' => $this->id])
         ];
     }
 }

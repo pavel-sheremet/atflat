@@ -5,6 +5,7 @@ namespace App\Filters;
 
 
 use App\Filters\Common\UserIdFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 class RealtyFilter extends AbstractFilter
 {
@@ -16,14 +17,20 @@ class RealtyFilter extends AbstractFilter
 
     protected $order;
 
-//    public function order(Builder $builder)
-//    {
-//        switch ($this->getOrder()->get('name'))
-//        {
-//            case 'user_name' :
-//                return $builder->join('users', 'agents.user_id', '=', 'users.id')
-//                    ->orderBy('users.name', $this->getOrder()->get('direction'));
-//        }
-//
-//    }
+    public function order(Builder $builder)
+    {
+        parent::order($builder);
+
+        switch ($this->getOrder()->get('name'))
+        {
+            case 'user_name' :
+                return $builder->join('users', 'agents.user_id', '=', 'users.id')
+                    ->orderBy('users.name', $this->getOrder()->get('direction'));
+        }
+    }
+
+    public function defaultOrder (Builder $builder)
+    {
+        return $builder->orderBy('created_at', 'desc');
+    }
 }

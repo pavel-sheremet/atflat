@@ -20,7 +20,7 @@ class RealtyController extends Controller
         return view('realty.index', [
             'realty' => RealtyResource::collection(Realty::with('agency')
                 ->filter($request)
-//                ->order($request)
+                ->order($request)
                 ->paginate(2, ['*'], 'realty_page')
             ),
 //            'agency' => new AgencyResource($agency),

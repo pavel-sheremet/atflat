@@ -21,6 +21,7 @@ import Vue from 'vue';
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('realty-create-form-component', require('./components/RealtyCreateFormComponent.vue').default);
 
 const lang = document.documentElement.lang.substr(0, 2);
 

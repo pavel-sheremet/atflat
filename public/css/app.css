@@ -11523,6 +11523,10 @@ a:hover {
   border-color: #fff;
 }
 
+.text-primary {
+  color: #986c73 !important;
+}
+
 option:checked {
   background: red;
 }

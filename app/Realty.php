@@ -15,6 +15,18 @@ use Eloquent;
  */
 class Realty extends Model
 {
+    protected $fillable = [
+        'price',
+        'type_id',
+        'sub_price',
+        'lat',
+        'long',
+        'city_id',
+        'street',
+        'description',
+        'rooms_number_id'
+    ];
+
     protected static function boot()
     {
         parent::boot();

@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Agency\Realty;
 
 use App\Agency;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RealtyRoomsNumber as RealtyRoomsNumberResource;
+use App\RealtyRoomsNumber;
+use App\RealtyType;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Http\Resources\Realty as RealtyResource;
 use App\Http\Resources\Agency as AgencyResource;
 use App\Http\Resources\Agent as AgentResource;
+use App\Http\Resources\RealtyType as RealtyTypeResource;
 
 class ProfileController extends Controller
 {
@@ -50,7 +54,7 @@ class ProfileController extends Controller
     {
         $this->authorize('viewProfile', $agency);
 
-        return view();
+        return view('profile.agency.realty.create');
     }
 
     /**
