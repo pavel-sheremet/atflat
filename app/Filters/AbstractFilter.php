@@ -27,7 +27,12 @@ abstract class AbstractFilter
     }
 
     public function order(Builder $builder)
-    {}
+    {
+        if ($this->getOrder()->isEmpty() && method_exists($this, 'defaultOrder'))
+        {
+            $this->defaultOrder($builder);
+        }
+    }
 
     protected function getOrder()
     {

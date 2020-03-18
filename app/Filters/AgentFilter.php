@@ -16,16 +16,21 @@ class AgentFilter extends AbstractFilter
 
     protected $name = 'agent';
 
-    protected $order;
-
     public function order(Builder $builder)
     {
+        parent::order($builder);
+
         switch ($this->getOrder()->get('name'))
         {
             case 'user_name' :
                 return $builder->join('users', 'agents.user_id', '=', 'users.id')
                     ->orderBy('users.name', $this->getOrder()->get('direction'));
         }
+    }
 
+    public function defaultOrder (Builder $builder)
+    {
+        return $builder->join('users', 'agents.user_id', '=', 'users.id')
+            ->orderBy('users.name', 'asc');
     }
 }

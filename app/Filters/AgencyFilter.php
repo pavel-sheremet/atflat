@@ -15,15 +15,19 @@ class AgencyFilter extends AbstractFilter
 
     protected $name = 'agency';
 
-    protected $order;
-
     public function order(Builder $builder)
     {
+        parent::order($builder);
+
         switch ($this->getOrder()->get('name'))
         {
             case 'name' :
-                return $builder->orderBy('name', $this->getOrder()[1]);
+                return $builder->orderBy('name', $this->getOrder()->get('direction'));
         }
+    }
 
+    public function defaultOrder (Builder $builder)
+    {
+        return $builder->orderBy('name', 'asc');
     }
 }

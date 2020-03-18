@@ -29,7 +29,10 @@ class AgentController extends Controller
                 ->paginate(10, ['*'], 'agent_page')
             ),
             'agencies_filter' => AgencyResource::collection(Agency::all()),
-            'agencies' => AgencyResource::collection(Agency::paginate(10, ['*'], 'agency_page')),
+            'agencies' => AgencyResource::collection(Agency::filter($request)
+                ->order($request)
+                ->paginate(10, ['*'], 'agency_page')
+            ),
             'filters' => \RequestHelper::getFilters(),
             'order' => \RequestHelper::getOrder(),
             'filters_number' => \RequestHelper::getFiltersNumber(),
