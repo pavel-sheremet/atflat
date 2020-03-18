@@ -23,7 +23,7 @@ class CreateRealtiesTable extends Migration
             $table->double('area')->nullable();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('rooms_number_id')->nullable()->unsigned();
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->double('lat');
             $table->double('long');
             $table->string('region')->nullable();
