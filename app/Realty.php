@@ -17,14 +17,21 @@ class Realty extends Model
 {
     protected $fillable = [
         'price',
+        'area',
         'type_id',
         'sub_price',
+        'description',
+        'rooms_number_id',
+
         'lat',
         'long',
+        'province',
+        'geo_area',
         'city_id',
+        'vegetation',
+        'district',
         'street',
-        'description',
-        'rooms_number_id'
+        'house',
     ];
 
     protected static function boot()

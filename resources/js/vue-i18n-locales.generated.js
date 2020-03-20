@@ -435,7 +435,7 @@ export default {
             },
             "not_in": "The selected {attribute} is invalid.",
             "not_regex": "The {attribute} format is invalid.",
-            "numeric": "The {attribute} must be a number.",
+            "numeric": "Поле {attribute} должно быть числом.",
             "password": "The password is incorrect.",
             "present": "The {attribute} field must be present.",
             "regex": "The {attribute} format is invalid.",
@@ -471,6 +471,11 @@ export default {
             "rooms_number": "{0} Студия ::: [1,7] {value} ::: [8,*] {value} и более",
             "create": {
                 "input": {
+                    "address": {
+                        "label": {
+                            "type_or_click": "Введите адрес или выберите на карте"
+                        }
+                    },
                     "type": {
                         "label": "Тип недвижимости"
                     },
@@ -485,6 +490,16 @@ export default {
                     },
                     "description": {
                         "label": "Описание"
+                    },
+                    "area": {
+                        "unit": "м",
+                        "label": "Площадь",
+                        "flat": {
+                            "label": "Площадь квартиры"
+                        },
+                        "room": {
+                            "label": "Площадь комнаты"
+                        }
                     }
                 }
             }

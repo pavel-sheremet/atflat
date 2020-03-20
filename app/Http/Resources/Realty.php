@@ -5,7 +5,6 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Agency as AgencyResource;
-use App\Http\Resources\Agent as AgentResource;
 
 class Realty extends JsonResource
 {
@@ -26,7 +25,7 @@ class Realty extends JsonResource
             'description' => $this->description,
             'user' => new UserResource($this->whenLoaded('user')),
             'agency' => new AgencyResource($this->whenLoaded('agency')),
-            'public_url' => route('realty.show', ['realty' => $this->id])
+            'url' => route('realty.show', ['realty' => $this->id])
         ];
     }
 }

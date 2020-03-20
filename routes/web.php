@@ -79,13 +79,11 @@ Route::group(['prefix' => 'agent'], function () {
 });
 
 Route::group(['prefix' => '/realty'], function () {
-    Route::post('/create', 'API\RealtyController@create');
-    Route::post('/store', 'API\RealtyController@store')->middleware('auth');
-
     Route::get('/', 'RealtyController@index')->name('realty')->middleware('clear.filter');
-
+    Route::post('/create', 'API\RealtyController@create')->name('realty.create');
+    Route::post('/store', 'API\RealtyController@store')->middleware('auth');
+    Route::get('/create', 'RealtyController@create')->middleware('auth')->name('realty.create');
     Route::get('/{realty}', 'RealtyController@show')->name('realty.show');
-    Route::get('/create', 'RealtyController@create')->name('realty.create');
 });
 
 Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function () {

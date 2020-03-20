@@ -26,8 +26,11 @@ class CreateRealtiesTable extends Migration
             $table->longText('description')->nullable();
             $table->double('lat');
             $table->double('long');
-            $table->string('region')->nullable();
+
+            $table->string('province')->nullable();
+            $table->string('geo_area')->nullable();
             $table->bigInteger('city_id');
+            $table->string('vegetation')->nullable();
             $table->string('district')->nullable();
             $table->string('street');
             $table->string('house')->nullable();

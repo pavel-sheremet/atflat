@@ -6,6 +6,16 @@ const RealtyCreate = {
             description: null,
             price: null,
             sub_price: null,
+            geo: {
+                province: null,
+                area: null,
+                locality: null,
+                vegetation: null,
+                district: null,
+                street: null,
+                house: null,
+                coords: null
+            },
             success_route: ''
         },
 
@@ -54,7 +64,6 @@ const RealtyCreate = {
                 state.realty.sub_price = data;
             }
         },
-
         fillType (state, data)
         {
             if (state.data.type !== data)
@@ -82,27 +91,17 @@ const RealtyCreate = {
             {
                 state.data.status.loading = data;
             }
+        },
+        setRealtyGeo (state, data)
+        {
+            if (state.realty.geo !== data)
+            {
+                state.realty.geo = data;
+            }
         }
     },
 
-    actions: {
-        fillType (context, data)
-        {
-            context.commit('RealtyCreate/fillType', data, {root: true});
-        },
-        fillRoomsNumber (context, data)
-        {
-            context.commit('RealtyCreate/fillRoomsNumber', data, {root: true});
-        },
-        setSuccessRoute (context, data)
-        {
-            context.commit('RealtyCreate/setSuccessRoute', data, {root: true});
-        },
-        setLoadingStatus (context, data)
-        {
-            context.commit('RealtyCreate/setLoadingStatus', data, {root: true})
-        }
-    },
+    actions: {},
 
     namespaced: true,
 };

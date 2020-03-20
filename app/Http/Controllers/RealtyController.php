@@ -21,7 +21,7 @@ class RealtyController extends Controller
             'realty' => RealtyResource::collection(Realty::with('agency')
                 ->filter($request)
                 ->order($request)
-                ->paginate(2, ['*'], 'realty_page')
+                ->paginate(10, ['*'], 'realty_page')
             ),
 //            'agency' => new AgencyResource($agency),
 //            'agents' => AgentResource::collection($agency->agents()->with('user')->get()),
@@ -44,7 +44,7 @@ class RealtyController extends Controller
      */
     public function create()
     {
-        //
+        return view('realty.create');
     }
 
     /**

@@ -25,9 +25,7 @@ class RealtyTableSeeder extends Seeder
                 $realty->description = $faker->description;
                 $realty->lat = $faker->lat;
                 $realty->long = $faker->long;
-                $realty->region = $faker->region;
                 $realty->city_id = $faker->city_id;
-                $realty->district = $faker->district;
                 $realty->street = $faker->street;
                 $realty->house = $faker->house;
                 $realty->save();

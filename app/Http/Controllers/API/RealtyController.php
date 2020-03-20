@@ -59,10 +59,15 @@ class RealtyController extends Controller
                 'sub_price' => $request->sub_price,
                 'description' => $request->description,
                 'rooms_number_id' => $request->rooms_number,
-                'lat' => $faker->latitude,
-                'long' => $faker->longitude,
-                'city_id' => City::inRandomOrder()->first()->id,
-                'street' => $faker->streetName,
+                'lat' => $request->input('geo.coords')[0],
+                'long' => $request->input('geo.coords')[1],
+                'province' => $request->input('geo.province'),
+                'geo_area' => $request->input('geo.area'),
+                'city_id' => City::firstOrCreate(['name' => $request->input('geo.locality')])->id,
+                'vegetation' => $request->input('geo.vegetation'),
+                'district' => $request->input('geo.district'),
+                'street' => $request->input('geo.street'),
+                'house' => $request->input('geo.house'),
             ]);
 
             $realty->save();

@@ -22,6 +22,7 @@ import Vue from 'vue';
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('realty-create-form-component', require('./components/RealtyCreateFormComponent.vue').default);
+Vue.component('yandex-map-component', require('./components/YandexMapComponent.vue').default);
 
 const lang = document.documentElement.lang.substr(0, 2);
 
