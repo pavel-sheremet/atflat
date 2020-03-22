@@ -1,5 +1,5 @@
 const YandexMapHelper = {
-    getNearestMetro(coords, params = {}) {
+    getMetro(coords, params = {}) {
         let geoCodeOptions = {
             kind: 'metro',
             results: 3

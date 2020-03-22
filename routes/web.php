@@ -12,6 +12,10 @@
 */
 
 Route::get('/', function () {
+    $realty = \App\Realty::with('metro')->find(101);
+    dd($realty->delete());
+
+    dd($realty);
 //    $realty = \App\Realty::find(1);
 //
 //    $file = new \App\File();

@@ -8,6 +8,7 @@ use App\Http\Requests\StoreRealty;
 use App\Http\Resources\Realty as RealtyResource;
 use App\Http\Resources\RealtyRoomsNumber as RealtyRoomsNumberResource;
 use App\Http\Resources\RealtyType as RealtyTypeResource;
+use App\Metro;
 use App\RealtyRoomsNumber;
 use App\RealtyType;
 use Faker\Generator;
@@ -47,12 +48,10 @@ class RealtyController extends Controller
      */
     public function store(StoreRealty $request)
     {
-        $faker  = new Generator();
-        $faker->addProvider(new \Faker\Provider\en_US\Person($faker));
-        $faker->addProvider(new \Faker\Provider\en_US\Address($faker));
-
         try
         {
+            $city = City::firstOrCreate(['name' => $request->input('geo.locality')]);
+
             $realty = \Auth::user()->realty()->make([
                 'type_id' => $request->type,
                 'price' => $request->price,
@@ -63,7 +62,7 @@ class RealtyController extends Controller
                 'long' => $request->input('geo.coords')[1],
                 'province' => $request->input('geo.province'),
                 'geo_area' => $request->input('geo.area'),
-                'city_id' => City::firstOrCreate(['name' => $request->input('geo.locality')])->id,
+                'city_id' => $city->id,
                 'vegetation' => $request->input('geo.vegetation'),
                 'district' => $request->input('geo.district'),
                 'street' => $request->input('geo.street'),
@@ -72,11 +71,25 @@ class RealtyController extends Controller
 
             $realty->save();
 
+            foreach ($request->input('geo.metro') as $requestMetro)
+            {
+                $metro = Metro::firstOrCreate([
+                    'name' => $requestMetro['name'],
+                    'city_id' => $city->id
+                ]);
+
+                $realty->metro()->attach($metro->id, [
+                    'distance' => $requestMetro['distance']
+                ]);
+            }
+
             return \response(new RealtyResource($realty));
         }
         catch (\Exception $e)
         {
-            return \response($e->getMessage());
+            $realty->delete();
+
+            return \response('internal error', 500);
         }
     }
 

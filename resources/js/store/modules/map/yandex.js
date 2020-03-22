@@ -1,3 +1,5 @@
+import YandexMapHelper from "./helper";
+
 const YandexMap = {
     state: {
         status: {
@@ -27,10 +29,10 @@ const YandexMap = {
                 district: null,
                 street: null,
                 house: null,
-                coords: null
+                coords: null,
+                metro: []
             },
             addressComponents: null,
-            // nearestMetro: []
         },
         markers: []
     },
@@ -147,6 +149,13 @@ const YandexMap = {
             {
                 state.input.geo.coords = data;
             }
+        },
+        setInputGeoMetro (state, data)
+        {
+            if (state.input.geo.metro !== data)
+            {
+                state.input.geo.metro = data;
+            }
         }
     },
 
@@ -159,6 +168,13 @@ const YandexMap = {
             context.commit('YandexMap/setCoords', data.coords, {root: true});
             context.dispatch('YandexMap/setMarker', data, {root: true});
             context.dispatch('YandexMap/setAddress', data, {root: true});
+            context.dispatch('YandexMap/setInputGeoMetro', data.coords, {root: true});
+
+        },
+        async setInputGeoMetro (context, data)
+        {
+            await YandexMapHelper.getMetro(data)
+                .then(res => {context.commit('YandexMap/setInputGeoMetro', res, {root: true})})
         },
         setMarker (context, data)
         {

@@ -153,7 +153,8 @@
                 await this.setLoadingStatus(true);
 
                 await axios.post('/realty/store', this.RealtyCreate.realty)
-                    .then(response => window.location.href = response.data.url)
+                    // .then(response => window.location.href = response.data.url)
+                    .then(response => console.log(response))
                     .catch(error => {
                         this.$store.dispatch('FormErrors/fill', error.response.data.errors);
                         this.setLoadingStatus(false);

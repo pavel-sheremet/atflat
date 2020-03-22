@@ -38,6 +38,10 @@ class Realty extends Model
     {
         parent::boot();
 
+        static::deleting(function ($model) {
+            $model->metro()->detach();
+        });
+
         static::addGlobalScope(new ActiveScope());
     }
 
@@ -76,5 +80,10 @@ class Realty extends Model
     public function file()
     {
         return $this->morphMany(File::class, 'fileable');
+    }
+
+    public function metro()
+    {
+        return $this->belongsToMany(Metro::class, 'realty_metro','realty_id', 'metro_id')->withPivot('distance');
     }
 }
