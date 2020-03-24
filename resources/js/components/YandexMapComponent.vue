@@ -63,6 +63,7 @@
                 timerId: null
             }
         },
+        props: ['init_start_coords'],
         computed: {
             ...mapState({
                 YandexMap: state => state.YandexMap
@@ -97,6 +98,7 @@
             ]),
             ...mapActions('YandexMap', [
                 'selectAddress',
+                'selectAddressByCoords',
             ]),
 
             async init (map)
@@ -105,37 +107,26 @@
 
                 this.setStatusLoading(false);
 
-                ymaps.geolocation.get({
-                    provider: 'auto',
-                    autoReverseGeocode: true
-                })
-                    .then(result => {
-                        let geoObject = result.geoObjects.get(0);
-                        let selected = {
-                            coords: result.geoObjects.position,
-                            properties: geoObject.properties.getAll()
-                        };
+                if (this.init_start_coords)
+                {
+                    ymaps.geolocation.get({
+                        provider: 'auto',
+                        autoReverseGeocode: true
+                    })
+                        .then(result => {
+                                let geoObject = result.geoObjects.get(0);
+                                let selected = {
+                                    coords: result.geoObjects.position,
+                                    properties: geoObject.properties.getAll()
+                                };
 
-                        this.selectAddress(selected);
-                    }
-                );
+                                this.selectAddress(selected);
+                            }
+                        );
+                }
 
                 this.map.events.add('click', async e => {
-                    let coords = e.get('coords');
-                    let selected = null;
-
-                    await ymaps.geocode(coords, {results: 1}).then(res => {
-
-                        let geoObject = res.geoObjects.get(0);
-
-                        selected = {
-                            coords: coords,
-                            properties: geoObject.properties.getAll()
-                        };
-                    });
-
-
-                    this.selectAddress(selected);
+                    this.selectAddressByCoords(e.get('coords'));
                 })
             },
             searchAddress (value) {
@@ -143,7 +134,7 @@
 
                 clearTimeout(this.timerId);
 
-                this.timerId = setTimeout(() => this.yaGeoCode(value), 1000);
+                this.timerId = setTimeout(() => this.yaGeoCode(value), 1500);
             },
             async yaGeoCode (value) {
                 let items = await YandexMapHelper.getAddressByGeoCode(value);

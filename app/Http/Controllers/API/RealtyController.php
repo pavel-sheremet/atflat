@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
-use App\City;
+use App\Events\RealtyCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRealty;
 use App\Http\Resources\Realty as RealtyResource;
 use App\Http\Resources\RealtyRoomsNumber as RealtyRoomsNumberResource;
 use App\Http\Resources\RealtyType as RealtyTypeResource;
-use App\Metro;
+use App\Realty;
 use App\RealtyRoomsNumber;
 use App\RealtyType;
-use Faker\Generator;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class RealtyController extends Controller
@@ -50,44 +48,29 @@ class RealtyController extends Controller
     {
         try
         {
-            $city = City::firstOrCreate(['name' => $request->input('geo.locality')]);
+            $realty = Realty::firstOrCreate([
+                'user_id' => $request->input('user_id'),
+                'type_id' => $request->input('type_id'),
+                'rooms_number_id' => $request->input('rooms_number_id'),
+                'description' => $request->input('description'),
+                'price' => $request->input('price'),
+                'sub_price' => $request->input('sub_price'),
+                'province' => $request->input('province'),
+                'geo_area' => $request->input('area'),
+                'city_id' => $request->input('city_id'),
+                'vegetation' => $request->input('vegetation'),
+                'district' => $request->input('district'),
+                'street' => $request->input('street'),
+                'house' => $request->input('house'),
+            ], $request->all());
 
-            $realty = \Auth::user()->realty()->make([
-                'type_id' => $request->type,
-                'price' => $request->price,
-                'sub_price' => $request->sub_price,
-                'description' => $request->description,
-                'rooms_number_id' => $request->rooms_number,
-                'lat' => $request->input('geo.coords')[0],
-                'long' => $request->input('geo.coords')[1],
-                'province' => $request->input('geo.province'),
-                'geo_area' => $request->input('geo.area'),
-                'city_id' => $city->id,
-                'vegetation' => $request->input('geo.vegetation'),
-                'district' => $request->input('geo.district'),
-                'street' => $request->input('geo.street'),
-                'house' => $request->input('geo.house'),
-            ]);
-
-            $realty->save();
-
-            foreach ($request->input('geo.metro') as $requestMetro)
-            {
-                $metro = Metro::firstOrCreate([
-                    'name' => $requestMetro['name'],
-                    'city_id' => $city->id
-                ]);
-
-                $realty->metro()->attach($metro->id, [
-                    'distance' => $requestMetro['distance']
-                ]);
-            }
+            event(new RealtyCreated($realty, $request));
 
             return \response(new RealtyResource($realty));
         }
         catch (\Exception $e)
         {
-            $realty->delete();
+//            return \response($e->getMessage());
 
             return \response('internal error', 500);
         }
@@ -112,19 +95,39 @@ class RealtyController extends Controller
      */
     public function edit($id)
     {
-        //
+        return response([
+            'type' => RealtyTypeResource::collection(RealtyType::all()),
+            'rooms_number' => RealtyRoomsNumberResource::collection(RealtyRoomsNumber::all()),
+            'realty' => new RealtyResource(Realty::with('metro', 'type')->find($id))
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param  int  $id
+     * @param StoreRealty $request
+     * @param Realty $realty
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreRealty $request, Realty $realty)
     {
-        //
+        try
+        {
+            $this->authorize('update', $realty);
+            $realty->update($request->all());
+
+            event(new RealtyCreated($realty, $request));
+
+            return \response(new RealtyResource($realty));
+        }
+        catch (\Exception $e)
+        {
+//            return \response($e->getMessage());
+
+            return \response('internal error', 500);
+        }
+
+
     }
 
     /**

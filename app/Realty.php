@@ -7,6 +7,7 @@ use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Eloquent;
+use function foo\func;
 
 /**
  * Class Realty
@@ -17,12 +18,12 @@ class Realty extends Model
 {
     protected $fillable = [
         'price',
+        'user_id',
         'area',
         'type_id',
         'sub_price',
         'description',
         'rooms_number_id',
-
         'lat',
         'long',
         'province',
@@ -58,6 +59,11 @@ class Realty extends Model
     public function type ()
     {
         return $this->hasOne('App\RealtyType', 'id', 'type_id');
+    }
+
+    public function rooms ()
+    {
+        return $this->hasOne(RealtyRoomsNumber::class, 'id', 'rooms_number_id');
     }
 
     public function user ()

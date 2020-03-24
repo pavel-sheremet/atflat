@@ -5,9 +5,15 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <form v-if="!RealtyCreate.data.status.loading && RealtyCreate.realty.geo.coords" v-on:submit.prevent="create(realty)">
+                        <form v-if="!RealtyCreate.data.status.loading && RealtyCreate.realty.geo.coords" v-on:submit.prevent="store(realty)">
 
                             <div class="row">
+                                <div class="form-group col-12">
+                                    <div v-if="FormErrors.data.street">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.data.street">{{ error }}</small>
+                                    </div>
+                                </div>
+
                                 <div class="form-group col-sm-6">
                                     <label>{{ this.$t('realty.create.input.type.label') }}</label>
                                     <select v-model="realty.type" class="form-control">
@@ -15,8 +21,8 @@
                                                 v-bind:value="type.id"
                                         >{{ type.name }}</option>
                                     </select>
-                                    <div v-if="FormErrors.data.type">
-                                        <small class="form-text text-danger" v-for="error in FormErrors.data.type">{{ error }}</small>
+                                    <div v-if="FormErrors.data.type_id">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.data.type_id">{{ error }}</small>
                                     </div>
                                 </div>
 
@@ -27,8 +33,8 @@
                                                 v-bind:value="rooms_number.id"
                                         >{{ rooms_number.name }}</option>
                                     </select>
-                                    <div v-if="FormErrors.data.rooms_number">
-                                        <small class="form-text text-danger" v-for="error in FormErrors.data.rooms_number">{{ error }}</small>
+                                    <div v-if="FormErrors.data.rooms_number_id">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.data.rooms_number_id">{{ error }}</small>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +91,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary">
-                                {{ this.$t('main.form.create') }}
+                                {{ this.$t('main.form.save') }}
                             </button>
 
                         </form>
@@ -104,7 +110,7 @@
 </template>
 
 <script>
-    import { mapState, mapMutations, mapGetters } from 'vuex';
+    import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
 
     export default {
         name: "RealtyCreateFormComponent",
@@ -115,11 +121,15 @@
                     rooms_number: null,
                     description: '',
                     price: null,
+                    area: null,
                     sub_price: null,
+                    geo: {
+                        coords: []
+                    }
                 },
             }
         },
-        props: ['success_route'],
+        props: ['data_url', 'save_url'],
         mounted() {
             this.fillData();
         },
@@ -137,7 +147,7 @@
         methods: {
             ...mapMutations('RealtyCreate', [
                 'setLoadingStatus',
-                'setRealtyGeoData',
+                'setRealtyGeoCoords',
                 'fillType',
                 'fillRoomsNumber',
                 'setSuccessRoute',
@@ -147,14 +157,23 @@
                 'setRealtyPrice',
                 'setRealtySubPrice',
                 'setRealtyGeo',
+                'setRealtyArea'
             ]),
-            async create ()
+            ...mapActions('RealtyCreate', [
+                'setRealtyData'
+            ]),
+            async store ()
             {
                 await this.setLoadingStatus(true);
+                await this.$store.dispatch('FormErrors/clear');
 
-                await axios.post('/realty/store', this.RealtyCreate.realty)
-                    // .then(response => window.location.href = response.data.url)
-                    .then(response => console.log(response))
+
+                await axios.post(this.save_url, this.RealtyCreate.realty)
+                    .then(response => window.location.href = response.data.url)
+                    // .then(response => {
+                    //     console.log(response)
+                    //     this.setLoadingStatus(false);
+                    // })
                     .catch(error => {
                         this.$store.dispatch('FormErrors/fill', error.response.data.errors);
                         this.setLoadingStatus(false);
@@ -163,17 +182,28 @@
             },
             fillData ()
             {
-                axios.post('/realty/create')
-                    .then(response => {
+                axios.post(this.data_url)
+                    .then(async response => {
                         this.fillType(response.data.type);
                         this.fillRoomsNumber(response.data.rooms_number);
                         this.setSuccessRoute(this.success_route);
+
+                        if ('realty' in response.data)
+                        {
+                            this.setRealtyData(response.data.realty);
+                            await this.$store.dispatch('YandexMap/selectAddressByCoords', response.data.realty.geo.coords)
+                        }
+
                         this.setLoadingStatus(false);
+
                     })
                     .catch(error => console.error(error))
             }
         },
         watch: {
+            'realty.geo.coords'(value) {
+                if (value !== this.RealtyCreate.realty.geo.coords) this.setRealtyGeoCoords(value);
+            },
             'YandexMap.input.geo.coords'(value) {
                 if (this.RealtyCreate.realty.geo !== value) this.setRealtyGeo(this.YandexMap.input.geo);
             },
@@ -207,6 +237,12 @@
             'RealtyCreate.realty.sub_price'(value) {
                 if (this.realty.sub_price !== value) this.realty.sub_price = value;
             },
+            'realty.area'(value) {
+                if (value !== this.RealtyCreate.realty.area) this.setRealtyArea(value);
+            },
+            'RealtyCreate.realty.area'(value) {
+                if (this.realty.area !== value) this.realty.area = value;
+            }
         },
     }
 </script>

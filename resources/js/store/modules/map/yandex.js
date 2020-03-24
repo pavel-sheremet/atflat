@@ -156,20 +156,38 @@ const YandexMap = {
             {
                 state.input.geo.metro = data;
             }
+        },
+        setZoom (state, data)
+        {
+            if (state.zoom !== data)
+            {
+                state.zoom = data;
+            }
         }
     },
 
     actions: {
-        selectAddress (context, data)
+        async selectAddressByCoords (context, data)
+        {
+            await ymaps.geocode(data, {results: 1}).then(res => {
+
+                let geoObject = res.geoObjects.get(0);
+
+                context.dispatch('YandexMap/selectAddress', {
+                    coords: data,
+                    properties: geoObject.properties.getAll()
+                }, {root: true});
+            });
+        },
+        async selectAddress (context, data)
         {
             context.commit('YandexMap/showInputDropdown', false, {root: true});
             context.commit('YandexMap/setSelected', data, {root: true});
             context.commit('YandexMap/setInputValue', data.properties.text, {root: true});
-            context.commit('YandexMap/setCoords', data.coords, {root: true});
-            context.dispatch('YandexMap/setMarker', data, {root: true});
+            await context.commit('YandexMap/setCoords', data.coords, {root: true});
             context.dispatch('YandexMap/setAddress', data, {root: true});
+            context.dispatch('YandexMap/setMarker', data, {root: true});
             context.dispatch('YandexMap/setInputGeoMetro', data.coords, {root: true});
-
         },
         async setInputGeoMetro (context, data)
         {

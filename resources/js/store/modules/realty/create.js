@@ -5,6 +5,7 @@ const RealtyCreate = {
             rooms_number: null,
             description: null,
             price: null,
+            area: null,
             sub_price: null,
             geo: {
                 province: null,
@@ -98,10 +99,34 @@ const RealtyCreate = {
             {
                 state.realty.geo = data;
             }
+        },
+        setRealtyArea (state, data)
+        {
+            if (state.realty.area !== data)
+            {
+                state.realty.area = data;
+            }
+        },
+        setRealtyGeoCoords (state, data)
+        {
+            if (state.realty.geo.coords !== data)
+            {
+                state.realty.geo.coords = data;
+            }
         }
     },
 
-    actions: {},
+    actions: {
+        setRealtyData (context, data)
+        {
+            context.commit('RealtyCreate/setRealtyType', data.type.id, {root: true});
+            context.commit('RealtyCreate/setRealtyPrice', data.price, {root: true});
+            context.commit('RealtyCreate/setRealtySubPrice', data.sub_price, {root: true});
+            context.commit('RealtyCreate/setRealtyArea', data.area, {root: true});
+            context.commit('RealtyCreate/setRealtyDescription', data.description, {root: true});
+            context.commit('RealtyCreate/setRealtyRoomsNumber', data.rooms.id, {root: true});
+        }
+    },
 
     namespaced: true,
 };

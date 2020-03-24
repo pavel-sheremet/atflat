@@ -12,10 +12,10 @@
 */
 
 Route::get('/', function () {
-    $realty = \App\Realty::with('metro')->find(101);
-    dd($realty->delete());
-
-    dd($realty);
+//    $realty = \App\Realty::with('metro')->find(101);
+//    dd($realty->delete());
+//
+//    dd($realty);
 //    $realty = \App\Realty::find(1);
 //
 //    $file = new \App\File();
@@ -40,10 +40,10 @@ Route::get('/', function () {
 //    $faker = new \Faker\Generator();
 //    $faker->image();
 
-    $agency = \App\Agency::withCount('realty')
-        ->with('realty', 'owner')
-        ->orderBy('realty_count', 'desc')
-        ->first();
+//    $agency = \App\Agency::withCount('realty')
+//        ->with('realty', 'owner')
+//        ->orderBy('realty_count', 'desc')
+//        ->first();
 
 //    Auth::loginUsingId($agency->owner->id, true);
 
@@ -82,11 +82,21 @@ Route::group(['prefix' => 'agent'], function () {
     Route::get('/{agent}', 'Agent\AgentController@show')->name('agent.show');
 });
 
+Route::group(['prefix' => '/api'], function () {
+    Route::group(['prefix' => '/route'], function () {
+        Route::post('/create', 'API\RealtyController@create')->name('api.realty.create');
+        Route::post('/store', 'API\RealtyController@store')->name('api.realty.store')->middleware('auth');
+        Route::post('/edit/{realty}', 'API\RealtyController@edit')->middleware('auth')->name('api.realty.edit');
+        Route::post('/update/{realty}', 'API\RealtyController@update')->middleware('auth')->name('api.realty.update');
+
+    });
+});
+
 Route::group(['prefix' => '/realty'], function () {
     Route::get('/', 'RealtyController@index')->name('realty')->middleware('clear.filter');
-    Route::post('/create', 'API\RealtyController@create')->name('realty.create');
-    Route::post('/store', 'API\RealtyController@store')->middleware('auth');
+
     Route::get('/create', 'RealtyController@create')->middleware('auth')->name('realty.create');
+    Route::get('/edit/{realty}', 'RealtyController@edit')->middleware('auth')->name('realty.edit');
     Route::get('/{realty}', 'RealtyController@show')->name('realty.show');
 });
 

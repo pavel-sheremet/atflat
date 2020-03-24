@@ -53,7 +53,7 @@ class AgencyPolicy
      */
     public function update(User $user, Agency $agency)
     {
-        //
+        return $user->isAgencyOwner($agency) || $user->isAgencyAgent($agency);
     }
 
     /**
@@ -65,7 +65,7 @@ class AgencyPolicy
      */
     public function delete(User $user, Agency $agency)
     {
-        //
+        return $user->isAgencyOwner($agency) || $user->isAgencyAgent($agency);
     }
 
     /**
@@ -77,7 +77,7 @@ class AgencyPolicy
      */
     public function restore(User $user, Agency $agency)
     {
-        //
+        return $user->isAgencyOwner($agency) || $user->isAgencyAgent($agency);
     }
 
     /**
@@ -89,6 +89,6 @@ class AgencyPolicy
      */
     public function forceDelete(User $user, Agency $agency)
     {
-        //
+        return $user->isAgencyOwner($agency) || $user->isAgencyAgent($agency);
     }
 }

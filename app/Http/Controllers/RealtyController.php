@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Realty;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Http\Resources\Realty as RealtyResource;
 use Illuminate\Http\Response;
@@ -23,17 +24,6 @@ class RealtyController extends Controller
                 ->order($request)
                 ->paginate(10, ['*'], 'realty_page')
             ),
-//            'agency' => new AgencyResource($agency),
-//            'agents' => AgentResource::collection($agency->agents()->with('user')->get()),
-//            'filter' => [
-//                'number' => \RequestHelper::getFiltersNumber(),
-//                'data' => \RequestHelper::getFilters(),
-//            ]
-//            'agencies_filter' => AgencyResource::collection(Agency::all()),
-//            'agencies' => AgencyResource::collection(Agency::paginate(10, ['*'], 'agency_page')),
-//            'filters' => \RequestHelper::getFilters(),
-//            'order' => \RequestHelper::getOrder(),
-//            'filters_number' => \RequestHelper::getFiltersNumber(),
         ]);
     }
 
@@ -61,7 +51,7 @@ class RealtyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Realty  $realty
+     * @param Realty $realty
      * @return Response
      */
     public function show(Realty $realty)
@@ -72,19 +62,25 @@ class RealtyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Realty  $realty
+     * @param Realty $realty
      * @return Response
+     * @throws AuthorizationException
      */
     public function edit(Realty $realty)
     {
-        //
+        $this->authorize('update', $realty);
+
+        return view('realty.edit', [
+            'realty' => new RealtyResource(Realty::with('metro')->find($realty->id))
+        ]);
+
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Realty  $realty
+     * @param Realty $realty
      * @return Response
      */
     public function update(Request $request, Realty $realty)
@@ -95,7 +91,7 @@ class RealtyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Realty  $realty
+     * @param Realty $realty
      * @return Response
      */
     public function destroy(Realty $realty)
