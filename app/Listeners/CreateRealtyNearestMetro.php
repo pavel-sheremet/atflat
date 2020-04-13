@@ -3,11 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\RealtyCreated;
-use App\Http\Requests\StoreRealty;
-use App\Http\Resources\Realty;
 use App\Metro;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class CreateRealtyNearestMetro
 {

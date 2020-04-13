@@ -78,11 +78,21 @@ return [
     ],
     'max' => [
         'numeric' => 'The :attribute may not be greater than :max.',
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
+        'file' => [
+            'single' => 'The :attribute may not be greater than :max kilobytes.',
+            'multiple' => [
+                'mb' => 'Размер файлов не должен превышать :max_mb Мегабайт'
+            ],
+        ],
         'string' => 'Превышена максимальная длина(:max символов) поля ":attribute"',
         'array' => 'The :attribute may not have more than :max items.',
     ],
-    'mimes' => 'The :attribute must be a file of type: :values.',
+    'mimes' => [
+        'single' => 'The :attribute must be a file of type: :values.',
+        'multiple' => [
+            'images' => 'Файлы должны быть изображениями в формате: :values.',
+        ]
+    ],
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
         'numeric' => 'The :attribute must be at least :min.',

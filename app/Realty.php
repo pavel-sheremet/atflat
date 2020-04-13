@@ -7,7 +7,6 @@ use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Eloquent;
-use function foo\func;
 
 /**
  * Class Realty
@@ -41,6 +40,7 @@ class Realty extends Model
 
         static::deleting(function ($model) {
             $model->metro()->detach();
+            $model->images()->delete();
         });
 
         static::addGlobalScope(new ActiveScope());
@@ -83,12 +83,12 @@ class Realty extends Model
         )->withoutGlobalScopes();
     }
 
-    public function file()
+    public function images ()
     {
         return $this->morphMany(File::class, 'fileable');
     }
 
-    public function metro()
+    public function metro ()
     {
         return $this->belongsToMany(Metro::class, 'realty_metro','realty_id', 'metro_id')->withPivot('distance');
     }

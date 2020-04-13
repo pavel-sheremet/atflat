@@ -4,7 +4,10 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -55,6 +58,14 @@ class Handler extends ExceptionHandler
             return redirect()->route('403');
         }
 
+        if ($exception instanceof QueryException)
+        {
+            // TODO: rewrite error message
+            return response('internal error', 400);
+        }
+
         return parent::render($request, $exception);
     }
+
+
 }

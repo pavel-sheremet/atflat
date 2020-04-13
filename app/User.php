@@ -62,6 +62,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Realty::class, 'user_id', 'id');
     }
 
+    public function files ()
+    {
+        return $this->hasMany(File::class, 'user_id', 'id');
+    }
+
     public function isAgent ()
     {
         return $this->agent !== null;

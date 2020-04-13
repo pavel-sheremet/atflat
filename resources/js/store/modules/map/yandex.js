@@ -167,17 +167,20 @@ const YandexMap = {
     },
 
     actions: {
-        async selectAddressByCoords (context, data)
+        selectAddressByCoords (context, data)
         {
-            await ymaps.geocode(data, {results: 1}).then(res => {
+            ymaps.ready(() => {
+                ymaps.geocode(data, {results: 1}).then(res => {
 
-                let geoObject = res.geoObjects.get(0);
+                    let geoObject = res.geoObjects.get(0);
 
-                context.dispatch('YandexMap/selectAddress', {
-                    coords: data,
-                    properties: geoObject.properties.getAll()
-                }, {root: true});
-            });
+                    context.dispatch('YandexMap/selectAddress', {
+                        coords: data,
+                        properties: geoObject.properties.getAll()
+                    }, {root: true});
+                });
+            })
+
         },
         async selectAddress (context, data)
         {

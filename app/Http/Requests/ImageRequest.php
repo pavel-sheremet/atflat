@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
-class StoreAgency extends FormRequest
+class ImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class StoreAgency extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return \Auth::id();
     }
 
     /**
@@ -24,16 +25,15 @@ class StoreAgency extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255|unique:agencies'
+            'file' => 'mimes:jpg,jpeg,png|max_mb:2'
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => __('agency.page.create.block.form.errors.name.required'),
-            'name.max' => __('agency.page.create.block.form.errors.name.max'),
-            'name.unique' => __('agency.page.create.block.form.errors.name.unique'),
+            'file.mimes' => __('validation.mimes.multiple.images'),
+            'file.max_mb' => __('validation.max.file.multiple.mb'),
         ];
     }
 }

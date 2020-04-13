@@ -15,14 +15,16 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('used')->default(false);
+            $table->boolean('user_id')->unsigned()->required();
             $table->bigInteger('bytes');
-            $table->string('public_id')->unique();
+            $table->string('fileable_type')->nullable();
+            $table->bigInteger('fileable_id')->unsigned()->nullable();
             $table->string('mime_type');
-            $table->string('extension');
             $table->string('disk');
-            $table->string('path');
+            $table->string('path')->unique();
+            $table->string('client_name');
             $table->timestamps();
-            $table->morphs('fileable');
         });
     }
 

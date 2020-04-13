@@ -180,6 +180,10 @@ return [
          * IDE-helper
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        /**
+         * Intervention
+         */
+        Intervention\Image\ImageServiceProvider::class,
 
 
     ],
@@ -232,7 +236,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'RequestHelper' => \App\Helpers\Request::class
+        'RequestHelper' => \App\Helpers\Request::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 

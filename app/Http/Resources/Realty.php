@@ -7,6 +7,7 @@ use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Agency as AgencyResource;
 use App\Http\Resources\Metro as MetroResource;
 use App\Http\Resources\Realty as RealtyResource;
+use App\Http\Resources\File as FileResource;
 
 class Realty extends JsonResource
 {
@@ -34,6 +35,7 @@ class Realty extends JsonResource
             'user' => new UserResource($this->whenLoaded('user')),
             'agency' => new AgencyResource($this->whenLoaded('agency')),
             'metro' => MetroResource::collection($this->whenLoaded('metro')),
+            'images' => FileResource::collection($this->whenLoaded('images')),
             'url' => route('realty.show', ['realty' => $this->id]),
         ];
     }

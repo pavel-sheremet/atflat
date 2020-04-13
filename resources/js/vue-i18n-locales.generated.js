@@ -202,15 +202,29 @@ export default {
                 "slogan": "Мы ищем и находим невижимость для Вас.",
                 "link_text": "Просто <a href=\"https://vk.com/atflat_group\">оставьте заявку</a> на поиск и подбор недвижимости и мы начнем поиск."
             },
+            "common": {
+                "status": {
+                    "loading": "Загрузка..."
+                }
+            },
             "form": {
                 "save": "Сохранить",
                 "create": "Создать",
-                "not_select": "Не выбрано"
+                "not_select": "Не выбрано",
+                "input": {
+                    "file": {
+                        "drop-zone": "Кликните или перенесите файлы",
+                        "images": {
+                            "label": "Изображения"
+                        }
+                    }
+                }
             },
             "button": {
                 "load_more": "Загрузить ещё",
                 "clear": "Очистить",
                 "close": "Закрыть",
+                "delete": "Удалить",
                 "filter": {
                     "toggle_btn": "Фильтры",
                     "submit": "Фильтровать"
@@ -421,11 +435,21 @@ export default {
             },
             "max": {
                 "numeric": "The {attribute} may not be greater than {max}.",
-                "file": "The {attribute} may not be greater than {max} kilobytes.",
+                "file": {
+                    "single": "The {attribute} may not be greater than {max} kilobytes.",
+                    "multiple": {
+                        "mb": "Размер файлов не должен превышать {max_mb} Мегабайт"
+                    }
+                },
                 "string": "Превышена максимальная длина({max} символов) поля \"{attribute}\"",
                 "array": "The {attribute} may not have more than {max} items."
             },
-            "mimes": "The {attribute} must be a file of type: {values}.",
+            "mimes": {
+                "single": "The {attribute} must be a file of type: {values}.",
+                "multiple": {
+                    "images": "Файлы должны быть изображениями в формате: {values}."
+                }
+            },
             "mimetypes": "The {attribute} must be a file of type: {values}.",
             "min": {
                 "numeric": "The {attribute} must be at least {min}.",
@@ -501,6 +525,11 @@ export default {
                             "label": "Площадь комнаты"
                         }
                     }
+                }
+            },
+            "validation": {
+                "street": {
+                    "required": "Необходимо указать улицу"
                 }
             }
         }

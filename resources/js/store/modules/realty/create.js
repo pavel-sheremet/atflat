@@ -17,7 +17,8 @@ const RealtyCreate = {
                 house: null,
                 coords: null
             },
-            success_route: ''
+            success_route: '',
+            images: []
         },
 
         data: {
@@ -113,6 +114,13 @@ const RealtyCreate = {
             {
                 state.realty.geo.coords = data;
             }
+        },
+        setRealtyImages (state, data)
+        {
+            if (state.realty.images !== data)
+            {
+                state.realty.images = data;
+            }
         }
     },
 
@@ -125,6 +133,7 @@ const RealtyCreate = {
             context.commit('RealtyCreate/setRealtyArea', data.area, {root: true});
             context.commit('RealtyCreate/setRealtyDescription', data.description, {root: true});
             context.commit('RealtyCreate/setRealtyRoomsNumber', data.rooms.id, {root: true});
+            context.commit('RealtyCreate/setRealtyImages', data.images, {root: true});
         }
     },
 

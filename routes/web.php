@@ -12,43 +12,11 @@
 */
 
 Route::get('/', function () {
-//    $realty = \App\Realty::with('metro')->find(101);
-//    dd($realty->delete());
-//
-//    dd($realty);
-//    $realty = \App\Realty::find(1);
-//
-//    $file = new \App\File();
-//    $file->bytes = 1;
-//    $file->public_id = rand();
-//    $file->mime_type = 1;
-//    $file->extension = 1;
-//    $file->disk = 1;
-//    $file->path = 1;
-//    $file->fileable()->associate($realty);
-//    $file->save();
-//
-//    dd($realty->file);
-//    factory(\App\File::class, 1)
-//        ->make()
-//        ->each(function ($faker) {
-//            $file = new \App\File();
-//            $file->name = $faker->name;
-//            $file->save();
-//        });
+    $files = Auth::user()->files()->unused()->get()->each(function ($item) {
+        $item->delete();
+    });
 
-//    $faker = new \Faker\Generator();
-//    $faker->image();
-
-//    $agency = \App\Agency::withCount('realty')
-//        ->with('realty', 'owner')
-//        ->orderBy('realty_count', 'desc')
-//        ->first();
-
-//    Auth::loginUsingId($agency->owner->id, true);
-
-
-
+    dd($files);
 
     return view('welcome');
 })->name('welcome');
@@ -59,6 +27,11 @@ Route::get('403', function () {
 
 Auth::routes(['verify' => true]);
 
+Route::group(['prefix' => '/file'], function () {
+//    Route::post('/store', 'FileController@store')->name('file.store');
+    Route::post('/upload', 'FileController@upload')->name('file.upload');
+    Route::post('/destroy', 'FileController@destroy')->name('file.destroy');
+});
 
 Route::group(['prefix' => '/agency'], function () {
     Route::group(['middleware' => ['auth']], function () {

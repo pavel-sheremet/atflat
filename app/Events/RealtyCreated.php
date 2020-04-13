@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Http\Requests\StoreRealty;
+use App\Http\Requests\RealtyRequest;
 use App\Realty;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -23,9 +23,9 @@ class RealtyCreated
      * Create a new event instance.
      *
      * @param Realty $realty
-     * @param StoreRealty $request
+     * @param RealtyRequest $request
      */
-    public function __construct(Realty $realty, StoreRealty $request)
+    public function __construct(Realty $realty, RealtyRequest $request)
     {
         $this->realty = $realty;
         $this->request = $request;

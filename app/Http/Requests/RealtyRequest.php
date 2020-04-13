@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\City;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRealty extends FormRequest
+class RealtyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,7 +35,8 @@ class StoreRealty extends FormRequest
             'district' => $this->input('geo.district'),
             'street' => $this->input('geo.street'),
             'house' => $this->input('geo.house'),
-            'metro' => $this->input('geo.metro')
+            'metro' => $this->input('geo.metro'),
+            'images' => $this->input('images')
         ]);
     }
 

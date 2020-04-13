@@ -6,6 +6,7 @@
         v-bind:init_start_coords="false"
     ></yandex-map-component>
 
+
     <realty-create-form-component
         v-bind:data_url="'{{ route('api.realty.edit', ['realty' => $realty->id]) }}'"
         v-bind:save_url="'{{ route('api.realty.update', ['realty' => $realty->id]) }}'"

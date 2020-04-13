@@ -17,6 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AgentTableSeeder::class);
         $this->call(RealtyTypeSeeder::class);
         $this->call(RealtyRoomsNumberSeeder::class);
-        $this->call(RealtyTableSeeder::class);
+//        $this->call(RealtyTableSeeder::class);
     }
 }

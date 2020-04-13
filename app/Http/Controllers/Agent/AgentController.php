@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Agent;
 use App\Agent;
 use App\Agency;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAgent as StoreAgentRequest;
+use App\Http\Requests\AgentRequest as AgentRequest;
 use App\Http\Resources\Agency as AgencyResource;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -54,10 +54,10 @@ class AgentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreAgentRequest $request
+     * @param AgentRequest $request
      * @return Response
      */
-    public function store(StoreAgentRequest $request)
+    public function store(AgentRequest $request)
     {
         $agent = new Agent();
         $agent->create($request->validated());

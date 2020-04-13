@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Agency;
 
 use App\Agency;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAgency;
+use App\Http\Requests\AgencyRequest;
 use App\Http\Resources\Agency as AgencyResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -45,7 +45,7 @@ class AgencyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return Response
      */
-    public function store(StoreAgency $request)
+    public function store(AgencyRequest $request)
     {
         $agency = new Agency();
         $agency->name = $request->name;

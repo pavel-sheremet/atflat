@@ -34,7 +34,7 @@ return [
                 'room' => [
                     'label' => 'Площадь комнаты'
                 ]
-            ]
+            ],
         ],
     ],
     'validation' => [

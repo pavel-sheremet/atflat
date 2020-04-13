@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\RealtyCreated;
+use App\Listeners\AttachRealtyImages;
+use App\Listeners\CreateRealtyNearestMetro;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,8 +20,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'App\Events\RealtyCreated' => [
-            'App\Listeners\CreateRealtyNearestMetro'
+        RealtyCreated::class => [
+            CreateRealtyNearestMetro::class,
+            AttachRealtyImages::class
         ]
     ];
 

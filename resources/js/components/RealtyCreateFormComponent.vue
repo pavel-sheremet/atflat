@@ -3,9 +3,26 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
+
+                    <div v-if="RealtyCreate.data.status.loading || !RealtyCreate.realty.geo.coords" class="overlay">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="loading-block row justify-content-center">
+                                        <div class="spinner-border mb-2" role="status">
+                                        </div>
+                                        <span class="col-12 loading-block__text">
+                                            {{ this.$t('main.common.status.loading') }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card-body">
 
-                        <form v-if="!RealtyCreate.data.status.loading && RealtyCreate.realty.geo.coords" v-on:submit.prevent="store(realty)">
+                        <form v-on:submit.prevent="store(realty)">
 
                             <div class="row">
                                 <div class="form-group col-12">
@@ -82,9 +99,12 @@
                                 </div>
                             </div>
 
+                            <file-uploader-input-component></file-uploader-input-component>
+
+
                             <div class="form-group">
                                 <label>{{ this.$t('realty.create.input.description.label') }}</label>
-                                <textarea v-model="realty.description" class="form-control" rows="3"></textarea>
+                                <textarea v-model="realty.description" class="form-control" rows="10"></textarea>
                                 <div v-if="FormErrors.data.description">
                                     <small class="form-text text-danger" v-for="error in FormErrors.data.description">{{ error }}</small>
                                 </div>
@@ -96,11 +116,7 @@
 
                         </form>
 
-                        <div v-else class="d-flex justify-content-center">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                        </div>
+
 
                     </div>
                 </div>
@@ -111,9 +127,11 @@
 
 <script>
     import { mapState, mapMutations, mapGetters, mapActions } from 'vuex';
+    import { yandexMap } from 'vue-yandex-maps';
 
     export default {
         name: "RealtyCreateFormComponent",
+        components: { yandexMap },
         data() {
             return {
                 realty: {
@@ -125,7 +143,8 @@
                     sub_price: null,
                     geo: {
                         coords: []
-                    }
+                    },
+                    images: []
                 },
             }
         },
@@ -137,7 +156,8 @@
             ...mapState({
                 RealtyCreate: state => state.RealtyCreate,
                 FormErrors: state => state.FormErrors,
-                YandexMap: state => state.YandexMap
+                YandexMap: state => state.YandexMap,
+                Uploader: state => state.Uploader
             }),
             ...mapGetters('YandexMap', [
                 'getAddressComponents'
@@ -157,21 +177,24 @@
                 'setRealtyPrice',
                 'setRealtySubPrice',
                 'setRealtyGeo',
-                'setRealtyArea'
+                'setRealtyArea',
+                'setRealtyImages'
             ]),
             ...mapActions('RealtyCreate', [
-                'setRealtyData'
+                'setRealtyData',
             ]),
             async store ()
             {
-                await this.setLoadingStatus(true);
+                // await this.setLoadingStatus(true);
                 await this.$store.dispatch('FormErrors/clear');
+
+
 
 
                 await axios.post(this.save_url, this.RealtyCreate.realty)
                     .then(response => window.location.href = response.data.url)
                     // .then(response => {
-                    //     console.log(response)
+                    //     console.log(response);
                     //     this.setLoadingStatus(false);
                     // })
                     .catch(error => {
@@ -191,7 +214,8 @@
                         if ('realty' in response.data)
                         {
                             this.setRealtyData(response.data.realty);
-                            await this.$store.dispatch('YandexMap/selectAddressByCoords', response.data.realty.geo.coords)
+                            await this.$store.dispatch('YandexMap/selectAddressByCoords', response.data.realty.geo.coords);
+                            this.$store.commit('Uploader/setFiles', response.data.realty.images);
                         }
 
                         this.setLoadingStatus(false);
@@ -206,6 +230,10 @@
             },
             'YandexMap.input.geo.coords'(value) {
                 if (this.RealtyCreate.realty.geo !== value) this.setRealtyGeo(this.YandexMap.input.geo);
+            },
+            'Uploader.files'(value)
+            {
+                this.setRealtyImages(value);
             },
             'realty.type'(value) {
                 if (value !== this.RealtyCreate.realty.type) this.setRealtyType(value);

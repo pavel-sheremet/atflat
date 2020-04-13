@@ -3,6 +3,23 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card mb-2">
+
+                    <div v-if="YandexMap.status.loading" class="overlay">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="loading-block row justify-content-center">
+                                        <div class="spinner-border mb-2" role="status">
+                                        </div>
+                                        <span class="col-12 loading-block__text">
+                                            {{ this.$t('main.common.status.loading') }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card-body">
 
                         <div class="form-group position-relative">
@@ -105,13 +122,13 @@
             {
                 this.map = map;
 
-                this.setStatusLoading(false);
 
                 if (this.init_start_coords)
                 {
-                    ymaps.geolocation.get({
+                    await ymaps.geolocation.get({
                         provider: 'auto',
-                        autoReverseGeocode: true
+                        // TODO: вроде без этого не находит текущую геолокацию, но это не точно...
+                        // autoReverseGeocode: true
                     })
                         .then(result => {
                                 let geoObject = result.geoObjects.get(0);
@@ -125,9 +142,12 @@
                         );
                 }
 
-                this.map.events.add('click', async e => {
-                    this.selectAddressByCoords(e.get('coords'));
-                })
+                await this.map.events.add('click', async e => {
+                    await this.selectAddressByCoords(e.get('coords'));
+                });
+
+                await this.setStatusLoading(false);
+
             },
             searchAddress (value) {
                 if (!String(value).length) return false;

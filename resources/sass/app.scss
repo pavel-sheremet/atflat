@@ -187,3 +187,81 @@ option
         background: red;
     }
 }
+
+.drop-zone {
+    width: 100%;
+    height: 70px;
+    border: 2px dashed rgba(206, 212, 218, 1);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: .25rem;
+    background: rgba(206, 212, 218, .1);
+
+    input{
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        position: absolute;
+        cursor: pointer
+    }
+}
+
+.overlay{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background: rgba(255, 255, 255, .8);
+
+    .card{
+        background: $main-light-purple-d;
+
+        .spinner-border{
+            color: white;
+        }
+
+        .loading-block__text{
+            color: white;
+            text-align: center;
+        }
+    }
+}
+
+.btn-close
+{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+
+    &:before {
+        transform: rotate(45deg);
+    }
+    &:after {
+        transform: rotate(-45deg);
+    }
+
+    &:before, &:after
+    {
+        position: absolute;
+        left: 13px;
+        content: ' ';
+        height: 15px;
+        width: 3px;
+        background-color: #fff;
+    }
+}
+
+
