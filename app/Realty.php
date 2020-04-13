@@ -32,6 +32,7 @@ class Realty extends Model
         'district',
         'street',
         'house',
+        'main_image_id'
     ];
 
     protected static function boot()
@@ -86,6 +87,11 @@ class Realty extends Model
     public function images ()
     {
         return $this->morphMany(File::class, 'fileable');
+    }
+
+    public function main_image()
+    {
+        return $this->morphOne(File::class, 'fileable', false, 'id', 'main_image_id');
     }
 
     public function metro ()
