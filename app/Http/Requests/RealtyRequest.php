@@ -53,6 +53,7 @@ class RealtyRequest extends FormRequest
             'price' => 'required|numeric',
             'sub_price' => 'numeric|nullable',
             'street' => 'required',
+            'images' => 'required'
         ];
     }
 
@@ -65,6 +66,7 @@ class RealtyRequest extends FormRequest
             'price.numeric' => __('validation.numeric', ['attribute' => __('realty.create.input.price.label')]),
             'sub_price.numeric' => __('validation.numeric', ['attribute' => __('realty.create.input.sub_price.label')]),
             'street.required' => __('realty.validation.street.required'),
+            'images.required' => __('realty.validation.images.required'),
         ];
     }
 }

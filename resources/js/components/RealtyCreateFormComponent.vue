@@ -99,7 +99,10 @@
                                 </div>
                             </div>
 
-                            <file-uploader-input-component></file-uploader-input-component>
+                            <file-uploader-input-component
+                                v-bind:errors="FormErrors.data.images"
+                            ></file-uploader-input-component>
+                            
 
 
                             <div class="form-group">

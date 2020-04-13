@@ -21,7 +21,7 @@ const FilesErrors = {
     },
 
     actions: {
-        fill (context, data)
+        fill (context, data = [])
         {
             let unique = [...new Set(Object.values(data).flat())];
 

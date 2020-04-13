@@ -34,8 +34,6 @@
                 <div class="row">
                     <div class=" col-6 col-sm-3 mt-2 "
                          style="height: 100px"
-                         @mouseenter.prevent="hover.index = index"
-                         @mouseleave.prevent="hover.index = null"
                          v-for="(file, index) in Uploader.files"
                     >
                         <div class="position-relative overflow-hidden d-flex  justify-content-center align-items-center"
@@ -63,16 +61,19 @@
         name: "FileUploaderInputComponent",
         data() {
             return {
-                hover: {
-                    index: null
-                }
             };
         },
+        props: ['errors'],
         computed: {
             ...mapState({
                 Uploader: state => state.Uploader,
                 FilesErrors: state => state.FilesErrors
             }),
+        },
+        watch: {
+            'errors'(value) {
+                this.$store.dispatch('FilesErrors/fill', value);
+            }
         },
         methods: {
             ...mapActions('Uploader', [
