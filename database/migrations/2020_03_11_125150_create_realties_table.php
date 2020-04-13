@@ -18,6 +18,7 @@ class CreateRealtiesTable extends Migration
             $table->timestamps();
             $table->boolean('active')->default(true);
             $table->bigInteger('type_id')->unsigned();
+            $table->bigInteger('main_image_id')->nullable()->unsigned();
             $table->double('price');
             $table->double('sub_price')->nullable();
             $table->double('area')->nullable();
