@@ -4,6 +4,7 @@ const Uploader = {
         status: {
             upload: false
         },
+        main: null
     },
 
     mutations: {
@@ -24,23 +25,38 @@ const Uploader = {
             {
                 state.status.upload = data;
             }
+        },
+        setMain (state, data)
+        {
+            if (state.main !== data)
+            {
+                state.main = data;
+            }
         }
     },
 
     actions: {
-        // addFiles (context, data)
-        // {
-        //     Array.from(data).map(file => {
-        //         context.commit('Uploader/addFile', file, {root: true});
-        //     });
-        // },
+        addFile (context, data)
+        {
+            context.commit('Uploader/addFile', data, {root: true});
+
+            if (!context.state.main)
+            {
+                context.commit('Uploader/setMain', data, {root: true});
+            }
+        },
         deleteFile (context, data)
         {
             let files = Array.from(context.state.files);
-            files.splice(data, 1);
+            let file = files.splice(data, 1)[0];
+
+            if (file.id === context.state.main.id)
+            {
+                context.commit('Uploader/setMain', files.length ? Object.assign({}, files[0]) : null, {root: true});
+            }
 
             context.commit('Uploader/setFiles', files, {root: true});
-        }
+        },
     },
 
     getters: {},

@@ -7,6 +7,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
@@ -29,6 +30,14 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+    protected function invalidJson($request, ValidationException $exception)
+    {
+        return response()->json([
+            'message' => __('validation.exception.message'),
+            'errors' => $exception->errors()
+        ], $exception->status);
+    }
 
     /**
      * Report or log an exception.

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Agency as AgencyResource;
@@ -14,7 +15,7 @@ class Realty extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return array
      */
     public function toArray($request)
@@ -37,6 +38,7 @@ class Realty extends JsonResource
             'metro' => MetroResource::collection($this->whenLoaded('metro')),
             'images' => FileResource::collection($this->whenLoaded('images')),
             'url' => route('realty.show', ['realty' => $this->id]),
+            'main_image' => new FileResource($this->whenLoaded('main_image'))
         ];
     }
 }

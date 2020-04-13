@@ -91,7 +91,7 @@ class RealtyController extends Controller
         return response([
             'type' => RealtyTypeResource::collection(RealtyType::all()),
             'rooms_number' => RealtyRoomsNumberResource::collection(RealtyRoomsNumber::all()),
-            'realty' => new RealtyResource(Realty::with('metro', 'type', 'images')->find($id))
+            'realty' => new RealtyResource(Realty::with('metro', 'type', 'images', 'main_image')->find($id))
         ]);
     }
 

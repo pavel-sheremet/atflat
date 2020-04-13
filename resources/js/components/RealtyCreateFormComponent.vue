@@ -26,8 +26,8 @@
 
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <div v-if="FormErrors.data.street">
-                                        <small class="form-text text-danger" v-for="error in FormErrors.data.street">{{ error }}</small>
+                                    <div v-if="FormErrors.errors.street">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.errors.street">{{ error }}</small>
                                     </div>
                                 </div>
 
@@ -38,8 +38,8 @@
                                                 v-bind:value="type.id"
                                         >{{ type.name }}</option>
                                     </select>
-                                    <div v-if="FormErrors.data.type_id">
-                                        <small class="form-text text-danger" v-for="error in FormErrors.data.type_id">{{ error }}</small>
+                                    <div v-if="FormErrors.errors.type_id">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.errors.type_id">{{ error }}</small>
                                     </div>
                                 </div>
 
@@ -50,8 +50,8 @@
                                                 v-bind:value="rooms_number.id"
                                         >{{ rooms_number.name }}</option>
                                     </select>
-                                    <div v-if="FormErrors.data.rooms_number_id">
-                                        <small class="form-text text-danger" v-for="error in FormErrors.data.rooms_number_id">{{ error }}</small>
+                                    <div v-if="FormErrors.errors.rooms_number_id">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.errors.rooms_number_id">{{ error }}</small>
                                     </div>
                                 </div>
                             </div>
@@ -63,8 +63,8 @@
                                            class="form-control"
                                            v-model="realty.price"
                                     >
-                                    <div v-if="FormErrors.data.price">
-                                        <small class="form-text text-danger" v-for="error in FormErrors.data.price">{{ error }}</small>
+                                    <div v-if="FormErrors.errors.price">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.errors.price">{{ error }}</small>
                                     </div>
                                 </div>
 
@@ -74,8 +74,8 @@
                                            class="form-control"
                                            v-model="realty.sub_price"
                                     >
-                                    <div v-if="FormErrors.data.sub_price">
-                                        <small class="form-text text-danger" v-for="error in FormErrors.data.sub_price">{{ error }}</small>
+                                    <div v-if="FormErrors.errors.sub_price">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.errors.sub_price">{{ error }}</small>
                                     </div>
                                 </div>
                             </div>
@@ -93,29 +93,30 @@
                                            class="form-control"
                                            v-model="realty.area"
                                     >
-                                    <div v-if="FormErrors.data.area">
-                                        <small class="form-text text-danger" v-for="error in FormErrors.data.area">{{ error }}</small>
+                                    <div v-if="FormErrors.errors.area">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.errors.area">{{ error }}</small>
                                     </div>
                                 </div>
                             </div>
 
                             <file-uploader-input-component
-                                v-bind:errors="FormErrors.data.images"
+                                v-bind:errors="[FormErrors.errors.images, FormErrors.errors.main_image_id]"
                             ></file-uploader-input-component>
-                            
+
 
 
                             <div class="form-group">
-                                <label>{{ this.$t('realty.create.input.description.label') }}</label>
-                                <textarea v-model="realty.description" class="form-control" rows="10"></textarea>
-                                <div v-if="FormErrors.data.description">
-                                    <small class="form-text text-danger" v-for="error in FormErrors.data.description">{{ error }}</small>
+                                <div v-if="FormErrors.message">
+                                    <small class="form-text text-danger">{{ FormErrors.message }}</small>
                                 </div>
                             </div>
+
 
                             <button type="submit" class="btn btn-primary">
                                 {{ this.$t('main.form.save') }}
                             </button>
+
+
 
                         </form>
 
@@ -147,7 +148,8 @@
                     geo: {
                         coords: []
                     },
-                    images: []
+                    images: [],
+                    main_image: null
                 },
             }
         },
@@ -181,27 +183,28 @@
                 'setRealtySubPrice',
                 'setRealtyGeo',
                 'setRealtyArea',
-                'setRealtyImages'
+                'setRealtyImages',
             ]),
             ...mapActions('RealtyCreate', [
                 'setRealtyData',
+                'setRealtyMainImage'
             ]),
             async store ()
             {
-                // await this.setLoadingStatus(true);
+                await this.setLoadingStatus(true);
                 await this.$store.dispatch('FormErrors/clear');
 
 
 
 
                 await axios.post(this.save_url, this.RealtyCreate.realty)
-                    .then(response => window.location.href = response.data.url)
-                    // .then(response => {
-                    //     console.log(response);
-                    //     this.setLoadingStatus(false);
-                    // })
+                    // .then(response => window.location.href = response.data.url)
+                    .then(response => {
+                        console.log(response);
+                        this.setLoadingStatus(false);
+                    })
                     .catch(error => {
-                        this.$store.dispatch('FormErrors/fill', error.response.data.errors);
+                        this.$store.dispatch('FormErrors/fill', error.response.data);
                         this.setLoadingStatus(false);
                     });
 
@@ -218,7 +221,8 @@
                         {
                             this.setRealtyData(response.data.realty);
                             await this.$store.dispatch('YandexMap/selectAddressByCoords', response.data.realty.geo.coords);
-                            this.$store.commit('Uploader/setFiles', response.data.realty.images);
+                            await this.$store.commit('Uploader/setFiles', response.data.realty.images);
+                            await this.setRealtyMainImage(response.data.realty.main_image);
                         }
 
                         this.setLoadingStatus(false);
@@ -228,6 +232,14 @@
             }
         },
         watch: {
+            'Uploader.main'(value)
+            {
+                this.setRealtyMainImage(value);
+            },
+            'RealtyCreate.realty.main_image'(value)
+            {
+                this.$store.commit('Uploader/setMain', value);
+            },
             'realty.geo.coords'(value) {
                 if (value !== this.RealtyCreate.realty.geo.coords) this.setRealtyGeoCoords(value);
             },

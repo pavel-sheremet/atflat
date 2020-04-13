@@ -36,7 +36,8 @@ class RealtyRequest extends FormRequest
             'street' => $this->input('geo.street'),
             'house' => $this->input('geo.house'),
             'metro' => $this->input('geo.metro'),
-            'images' => $this->input('images')
+            'images' => $this->input('images'),
+            'main_image_id' => $this->input('main_image.id')
         ]);
     }
 
@@ -53,7 +54,7 @@ class RealtyRequest extends FormRequest
             'price' => 'required|numeric',
             'sub_price' => 'numeric|nullable',
             'street' => 'required',
-            'images' => 'required'
+            'main_image_id' => 'required_with:images'
         ];
     }
 
@@ -67,6 +68,7 @@ class RealtyRequest extends FormRequest
             'sub_price.numeric' => __('validation.numeric', ['attribute' => __('realty.create.input.sub_price.label')]),
             'street.required' => __('realty.validation.street.required'),
             'images.required' => __('realty.validation.images.required'),
+            'main_image_id.required_with' => __('realty.validation.main_image_id.required')
         ];
     }
 }

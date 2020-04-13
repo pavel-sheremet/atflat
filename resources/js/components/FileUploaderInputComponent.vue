@@ -36,14 +36,23 @@
                          style="height: 100px"
                          v-for="(file, index) in Uploader.files"
                     >
-                        <div class="position-relative overflow-hidden d-flex  justify-content-center align-items-center"
+                        <div class="position-relative overflow-hidden d-flex justify-content-center align-items-center rounded"
                              style="height: 100%"
+
                         >
-                            <a :href="file.url" target="_blank">
-                                <img :src="file.url" class="mw-100 h-auto">
-                            </a>
+                            <img @click.prevent="setMain(file)"
+                                 :src="file.url"
+                                 class="mw-100 h-auto cursor-pointer"
+                            >
+
+                            <span v-if="!!main && file.id === main.id"
+                                  class="badge badge-secondary position-absolute top-0 left-0"
+                            >{{ $t('file.badge.main_photo') }}</span>
 
                         </div>
+
+
+
                         <button class="btn btn-primary btn-close"
                                 v-on:click.prevent="deleteFile(index)"
                         ></button>
@@ -61,9 +70,10 @@
         name: "FileUploaderInputComponent",
         data() {
             return {
+                main: null
             };
         },
-        props: ['errors'],
+        props: ['errors', 'set_main'],
         computed: {
             ...mapState({
                 Uploader: state => state.Uploader,
@@ -73,15 +83,20 @@
         watch: {
             'errors'(value) {
                 this.$store.dispatch('FilesErrors/fill', value);
+            },
+            'Uploader.main'(value)
+            {
+                this.main = value;
             }
         },
         methods: {
             ...mapActions('Uploader', [
-                'deleteFile'
+                'deleteFile',
+                'addFile',
             ]),
             ...mapMutations('Uploader', [
-                'addFile',
-                'setStatusUpload'
+                'setStatusUpload',
+                'setMain'
             ]),
             async upload(files) {
                 if (this.Uploader.status.upload !== true)

@@ -53,6 +53,14 @@
   left: 0 !important;
 }
 
+.shadow-primary {
+  box-shadow: 0 0 7px 5px #b6868e;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

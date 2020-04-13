@@ -254,6 +254,11 @@ export default {
                 }
             }
         },
+        "file": {
+            "badge": {
+                "main_photo": "Основное фото"
+            }
+        },
         "user": {
             "page": {
                 "profile": {
@@ -529,7 +534,13 @@ export default {
             },
             "validation": {
                 "street": {
-                    "required": "Необходимо указать улицу"
+                    "required": "Необходимо указать корректный адрес"
+                },
+                "images": {
+                    "required": "Необходимо загрузить хотя бы одно изображение"
+                },
+                "main_image_id": {
+                    "required": "Необходимо выбрать основное фото"
                 }
             }
         }

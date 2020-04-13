@@ -1,39 +1,56 @@
 const FormErrors = {
     state: {
-        data: {}
+        errors: {},
+        message: null
     },
 
     mutations: {
-        fill (state, data)
+        setErrors (state, data)
         {
-            if (state.data !== data)
+            if (state.errors !== data)
             {
-                state.data = data;
+                state.errors = data;
             }
         },
-        clear (state, data)
+        setMessage (state, data)
         {
-            if (state.data !== data)
+            if (state.message !== data)
             {
-                state.data = data;
+                state.message = data;
             }
         }
+        // fill (state, data)
+        // {
+        //     if (state.errors !== data)
+        //     {
+        //         state.errors = data;
+        //     }
+        // },
+        // clear (state, data)
+        // {
+        //     if (state.errors !== data)
+        //     {
+        //         state.errors = data;
+        //     }
+        // }
     },
 
     actions: {
         fill (context, data)
         {
-            context.commit('FormErrors/fill', data, {root: true});
+            context.commit('FormErrors/setErrors', data.errors, {root: true});
+            context.commit('FormErrors/setMessage', data.message, {root: true});
         },
         clear (context)
         {
-            context.commit('FormErrors/clear', {}, {root: true});
+            context.commit('FormErrors/setErrors', {}, {root: true});
+            context.commit('FormErrors/setMessage', null, {root: true});
         }
     },
 
     getters : {
         flat: state => {
-            return Object.values(state.data).flat();
+            return Object.values(state.errors).flat();
         }
     },
 

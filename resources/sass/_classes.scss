@@ -65,3 +65,13 @@
 {
     left: 0 !important;
 }
+
+.shadow-primary
+{
+    box-shadow: 0 0 7px 5px $main-light-purple;
+}
+
+.cursor-pointer
+{
+    cursor: pointer;
+}
