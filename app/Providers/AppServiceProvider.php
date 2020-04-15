@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Blade;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\ServiceProvider;
@@ -34,6 +35,14 @@ class AppServiceProvider extends ServiceProvider
 
         Validator::replacer('max_mb', function ($message, $attribute, $rule, $parameters) {
             return str_replace(':' . $rule, $parameters[0], $message);
+        });
+
+        Blade::directive('money_month', function ($sum) {
+            return "<?php echo __('numbers.money.sum.per.month.with.currency', ['sum' => number_format((float)$sum, 0, '.', ' ')]); ?>";
+        });
+
+        Blade::directive('money', function ($sum) {
+            return "<?php echo __('numbers.money.sum.per.single.with.currency', ['sum' => number_format((float)$sum, 0, '.', ' ')]); ?>";
         });
 
         Resource::withoutWrapping();

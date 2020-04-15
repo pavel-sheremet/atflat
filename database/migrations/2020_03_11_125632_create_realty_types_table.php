@@ -17,6 +17,7 @@ class CreateRealtyTypesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->boolean('active')->default(1);
+            $table->string('code')->unique();
             $table->string('name')->unique();
         });
     }

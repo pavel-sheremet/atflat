@@ -14,10 +14,12 @@ class RealtyTypeSeeder extends Seeder
     {
         $realtyType = new RealtyType();
         $realtyType->name = 'Квартира';
+        $realtyType->code = 'flat';
         $realtyType->save();
 
         $realtyType = new RealtyType();
         $realtyType->name = 'Комната';
+        $realtyType->code = 'room';
         $realtyType->save();
     }
 }

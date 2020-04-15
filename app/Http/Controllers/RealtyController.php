@@ -19,10 +19,10 @@ class RealtyController extends Controller
     public function index(Request $request)
     {
         return view('realty.index', [
-            'realty' => RealtyResource::collection(Realty::with('agency')
+            'realty' => RealtyResource::collection(Realty::with('main_image', 'metro')
                 ->filter($request)
                 ->order($request)
-                ->paginate(10, ['*'], 'realty_page')
+                ->paginate(20, ['*'], 'realty_page')
             ),
         ]);
     }

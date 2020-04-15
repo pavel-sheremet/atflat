@@ -36,10 +36,7 @@
                          style="height: 100px"
                          v-for="(file, index) in Uploader.files"
                     >
-                        <div class="position-relative overflow-hidden d-flex justify-content-center align-items-center rounded"
-                             style="height: 100%"
-
-                        >
+                        <div class="position-relative overflow-hidden d-flex justify-content-center align-items-center h-100 rounded">
                             <img @click.prevent="setMain(file)"
                                  :src="file.url"
                                  class="mw-100 h-auto cursor-pointer"

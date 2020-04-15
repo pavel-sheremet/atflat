@@ -47,6 +47,7 @@ class Realty extends Model
         static::addGlobalScope(new ActiveScope());
     }
 
+    // scopes
     public function scopeFilter(Builder $builder, $request)
     {
         return (new RealtyFilter($request))->filter($builder);
@@ -57,6 +58,7 @@ class Realty extends Model
         return (new RealtyFilter($request))->order($builder);
     }
 
+    // relations
     public function type ()
     {
         return $this->hasOne('App\RealtyType', 'id', 'type_id');
@@ -96,6 +98,66 @@ class Realty extends Model
 
     public function metro ()
     {
-        return $this->belongsToMany(Metro::class, 'realty_metro','realty_id', 'metro_id')->withPivot('distance');
+        return $this->belongsToMany(Metro::class, 'realty_metro','realty_id', 'metro_id')
+            ->withPivot('distance')
+            ->orderBy('realty_metro.distance');
+    }
+
+    public function city ()
+    {
+        return $this->hasOne(City::class, 'id', 'city_id');
+    }
+
+    // logic
+    public function isFlat ()
+    {
+        return $this->type->code === 'flat';
+    }
+
+    public function isRoom ()
+    {
+        return $this->type->code === 'room';
+    }
+
+
+    // attributes
+    public function getTitleAttribute ()
+    {
+        if ($this->isFlat())
+        {
+            return trans_choice('realty.title.flat', $this->rooms->value, [
+                'rooms' => $this->rooms->value,
+                'area' => $this->area
+            ]);
+        }
+
+        if ($this->isRoom())
+        {
+            return trans_choice('realty.title.room', $this->rooms->value, [
+                'rooms' => $this->rooms->value,
+            ]);
+        }
+    }
+
+    public function getFullAddressAttribute ()
+    {
+        return __('realty.full_address', [
+            'city' => $this->city->name,
+            'street' => $this->street,
+            'house' => $this->house
+        ]);
+    }
+
+    public function getStreetAddressAttribute ()
+    {
+        return __('address.street_address', [
+            'street' => $this->street,
+            'house' => $this->house
+        ]);
+    }
+
+    public function getNearestMetroAttribute ()
+    {
+        return $this->metro()->first();
     }
 }

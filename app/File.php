@@ -60,6 +60,6 @@ class File extends Model
     }
 
     public function getFullUrlAttribute() {
-        return \Storage::disk('upload')->url($this->path);
+        return \Storage::disk($this->disk)->url($this->path);
     }
 }
