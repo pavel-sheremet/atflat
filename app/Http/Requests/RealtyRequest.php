@@ -37,7 +37,8 @@ class RealtyRequest extends FormRequest
             'house' => $this->input('geo.house'),
             'metro' => $this->input('geo.metro'),
             'images' => $this->input('images'),
-            'main_image_id' => $this->input('main_image.id')
+            'main_image_id' => $this->input('main_image.id'),
+            'rent_period' => $this->input('rent_period'),
         ]);
     }
 
@@ -54,7 +55,8 @@ class RealtyRequest extends FormRequest
             'price' => 'required|numeric',
             'sub_price' => 'numeric|nullable',
             'street' => 'required',
-            'main_image_id' => 'required_with:images'
+            'main_image_id' => 'required_with:images',
+            'rent_period' => 'required',
         ];
     }
 
@@ -68,7 +70,8 @@ class RealtyRequest extends FormRequest
             'sub_price.numeric' => __('validation.numeric', ['attribute' => __('realty.create.input.sub_price.label')]),
             'street.required' => __('realty.validation.street.required'),
             'images.required' => __('realty.validation.images.required'),
-            'main_image_id.required_with' => __('realty.validation.main_image_id.required')
+            'main_image_id.required_with' => __('realty.validation.main_image_id.required'),
+            'rent_period.required' => __('realty.validation.rent_period.required'),
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\RealtyCreated;
 use App\Listeners\AttachRealtyImages;
 use App\Listeners\CreateRealtyNearestMetro;
+use App\Listeners\SyncRealtyRentPeriod;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,7 +23,8 @@ class EventServiceProvider extends ServiceProvider
         ],
         RealtyCreated::class => [
             CreateRealtyNearestMetro::class,
-            AttachRealtyImages::class
+            AttachRealtyImages::class,
+            SyncRealtyRentPeriod::class
         ]
     ];
 

@@ -19,7 +19,8 @@ const RealtyCreate = {
             },
             success_route: '',
             main_image: null,
-            images: []
+            images: [],
+            rent_period: []
         },
 
         data: {
@@ -27,7 +28,8 @@ const RealtyCreate = {
             type: {},
             status: {
                 loading: true
-            }
+            },
+            rent_period: []
         }
     },
 
@@ -44,6 +46,13 @@ const RealtyCreate = {
             if (state.realty.rooms_number !== data)
             {
                 state.realty.rooms_number = data;
+            }
+        },
+        setRealtyRentPeriod (state, data)
+        {
+            if (state.realty.rent_period !== data)
+            {
+                state.realty.rent_period = data;
             }
         },
         setRealtyDescription (state, data)
@@ -79,6 +88,13 @@ const RealtyCreate = {
             if (state.data.rooms_number !== data)
             {
                 state.data.rooms_number = data;
+            }
+        },
+        fillRentPeriod (state, data)
+        {
+            if (state.data.rent_period !== data)
+            {
+                state.data.rent_period = data;
             }
         },
         setSuccessRoute (state, data)
@@ -142,6 +158,14 @@ const RealtyCreate = {
             context.commit('RealtyCreate/setRealtyDescription', data.description, {root: true});
             context.commit('RealtyCreate/setRealtyRoomsNumber', data.rooms.id, {root: true});
             context.commit('RealtyCreate/setRealtyImages', data.images, {root: true});
+            context.dispatch('RealtyCreate/setRealtyRentPeriod', data.rent_period, {root: true});
+
+            console.log(data)
+            // TODO: rent_period
+        },
+        setRealtyRentPeriod (context, data)
+        {
+            context.commit('RealtyCreate/setRealtyRentPeriod', data.map(x => x.id), {root: true});
         },
         setRealtyMainImage (context, data)
         {

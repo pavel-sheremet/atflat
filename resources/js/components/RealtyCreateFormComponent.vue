@@ -44,7 +44,29 @@
                                 </div>
 
                                 <div class="form-group col-sm-6">
-                                    <label>{{ this.$t('realty.create.input.rooms_number.label') }}</label>
+                                    <label>{{ $t('realty.create.input.rent_period.label') }}</label>
+                                    <div class="row">
+                                        <div v-for="rent_period in RealtyCreate.data.rent_period"
+                                             class="col-12 col-md-6"
+                                        >
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input"
+                                                           type="checkbox"
+                                                           v-model="realty.rent_period"
+                                                           v-bind:value="rent_period.id">
+                                                    {{ rent_period.name }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-if="FormErrors.errors.rent_period">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.errors.rent_period">{{ error }}</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-sm-6">
+                                    <label>{{ $t('realty.create.input.rooms_number.label') }}</label>
                                     <select v-model="realty.rooms_number" class="form-control">
                                         <option v-for="rooms_number in RealtyCreate.data.rooms_number"
                                                 v-bind:value="rooms_number.id"
@@ -54,11 +76,8 @@
                                         <small class="form-text text-danger" v-for="error in FormErrors.errors.rooms_number_id">{{ error }}</small>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label>{{ this.$t('realty.create.input.price.label') }} ₽/месяц</label>
+                                    <label>{{ $t('realty.create.input.price.label') }} ₽/месяц</label>
                                     <input type="number"
                                            class="form-control"
                                            v-model="realty.price"
@@ -69,7 +88,7 @@
                                 </div>
 
                                 <div class="form-group col-sm-6">
-                                    <label>{{ this.$t('realty.create.input.sub_price.label') }}</label>
+                                    <label>{{ $t('realty.create.input.sub_price.label') }}</label>
                                     <input type="number"
                                            class="form-control"
                                            v-model="realty.sub_price"
@@ -78,15 +97,12 @@
                                         <small class="form-text text-danger" v-for="error in FormErrors.errors.sub_price">{{ error }}</small>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
                                 <div class="form-group col-sm-6">
                                     <label>
-                                        <span v-if="RealtyCreate.realty.type === 1">{{ this.$t('realty.create.input.area.flat.label') }}</span>
-                                        <span v-else-if="RealtyCreate.realty.type === 2">{{ this.$t('realty.create.input.area.room.label') }}</span>
-                                        <span v-else>{{ this.$t('realty.create.input.area.label') }}</span>
-                                        {{ this.$t('realty.create.input.area.unit') }}<sup>2</sup>
+                                        <span v-if="RealtyCreate.realty.type === 1">{{ $t('realty.create.input.area.flat.label') }}</span>
+                                        <span v-else-if="RealtyCreate.realty.type === 2">{{ $t('realty.create.input.area.room.label') }}</span>
+                                        <span v-else>{{ $t('realty.create.input.area.label') }}</span>
+                                        {{ $t('realty.create.input.area.unit') }}<sup>2</sup>
                                     </label>
 
                                     <input type="number"
@@ -113,7 +129,7 @@
 
 
                             <button type="submit" class="btn btn-primary">
-                                {{ this.$t('main.form.save') }}
+                                {{ $t('main.form.save') }}
                             </button>
 
 
@@ -141,6 +157,7 @@
                 realty: {
                     type: null,
                     rooms_number: null,
+                    rent_period: [],
                     description: '',
                     price: null,
                     area: null,
@@ -175,6 +192,7 @@
                 'setRealtyGeoCoords',
                 'fillType',
                 'fillRoomsNumber',
+                'fillRentPeriod',
                 'setSuccessRoute',
                 'setRealtyType',
                 'setRealtyRoomsNumber',
@@ -184,6 +202,7 @@
                 'setRealtyGeo',
                 'setRealtyArea',
                 'setRealtyImages',
+                'setRealtyRentPeriod'
             ]),
             ...mapActions('RealtyCreate', [
                 'setRealtyData',
@@ -215,6 +234,7 @@
                     .then(async response => {
                         this.fillType(response.data.type);
                         this.fillRoomsNumber(response.data.rooms_number);
+                        this.fillRentPeriod(response.data.rent_period);
                         this.setSuccessRoute(this.success_route);
 
                         if ('realty' in response.data)
@@ -261,6 +281,13 @@
             },
             'RealtyCreate.realty.rooms_number'(value) {
                 if (this.realty.rooms_number !== value) this.realty.rooms_number = value;
+            },
+            'realty.rent_period'(value) {
+                if (value !== this.RealtyCreate.realty.rent_period) this.setRealtyRentPeriod(value);
+            },
+            'RealtyCreate.realty.rent_period'(value)
+            {
+                if (this.realty.rent_period !== value) this.realty.rent_period = value;
             },
             'realty.description'(value) {
                 if (value !== this.RealtyCreate.realty.description) this.setRealtyDescription(value);

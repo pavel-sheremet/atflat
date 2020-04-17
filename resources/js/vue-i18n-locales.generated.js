@@ -254,6 +254,10 @@ export default {
                 }
             }
         },
+        "address": {
+            "full_address": "{city}, {street}, {house}",
+            "street_address": "{street}, {house}"
+        },
         "file": {
             "badge": {
                 "main_photo": "Основное фото"
@@ -263,6 +267,24 @@ export default {
             "page": {
                 "profile": {
                     "nav": "Личный кабинет"
+                }
+            }
+        },
+        "numbers": {
+            "money": {
+                "sum": {
+                    "per": {
+                        "single": {
+                            "with": {
+                                "currency": "{sum} ₽"
+                            }
+                        },
+                        "month": {
+                            "with": {
+                                "currency": "{sum} ₽ в месяц"
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -375,6 +397,9 @@ export default {
             "my_agencies": "Мои агенства"
         },
         "validation": {
+            "exception": {
+                "message": "Введены некорректные данные"
+            },
             "accepted": "The {attribute} must be accepted.",
             "active_url": "The {attribute} is not a valid URL.",
             "after": "The {attribute} must be a date after {date}.",
@@ -529,6 +554,9 @@ export default {
                         "room": {
                             "label": "Площадь комнаты"
                         }
+                    },
+                    "rent_period": {
+                        "label": "Срок аренды"
                     }
                 }
             },
@@ -541,6 +569,18 @@ export default {
                 },
                 "main_image_id": {
                     "required": "Необходимо выбрать основное фото"
+                }
+            },
+            "title": {
+                "flat": "{0} Студия, {area} кв.м ::: [1,7] {rooms}-комн квартира, {area} кв.м ::: [8,*] {rooms}-комн и более квартира, {area} кв.м",
+                "room": "[1,7] Комната в {rooms}-комн. квартире ::: [8,*] Комната в {rooms}-комн. и более квартире"
+            },
+            "rent_period": {
+                "long": {
+                    "name": "Долгосрочный"
+                },
+                "short": {
+                    "name": "Краткосрочный"
                 }
             }
         }

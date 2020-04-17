@@ -91,6 +91,11 @@ class Realty extends Model
         return $this->morphMany(File::class, 'fileable');
     }
 
+    public function rent_period ()
+    {
+        return $this->morphToMany(RentPeriod::class, 'rent_periodable');
+    }
+
     public function main_image()
     {
         return $this->morphOne(File::class, 'fileable', false, 'id', 'main_image_id');

@@ -8,9 +8,11 @@ use App\Http\Requests\RealtyRequest;
 use App\Http\Resources\Realty as RealtyResource;
 use App\Http\Resources\RealtyRoomsNumber as RealtyRoomsNumberResource;
 use App\Http\Resources\RealtyType as RealtyTypeResource;
+use App\Http\Resources\RentPeriod as RentPeriodResource;
 use App\Realty;
 use App\RealtyRoomsNumber;
 use App\RealtyType;
+use App\RentPeriod;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Response;
 
@@ -36,6 +38,7 @@ class RealtyController extends Controller
         return response([
             'type' => RealtyTypeResource::collection(RealtyType::all()),
             'rooms_number' => RealtyRoomsNumberResource::collection(RealtyRoomsNumber::all()),
+            'rent_period' => RentPeriodResource::collection(RentPeriod::all())
         ]);
     }
 
@@ -91,7 +94,8 @@ class RealtyController extends Controller
         return response([
             'type' => RealtyTypeResource::collection(RealtyType::all()),
             'rooms_number' => RealtyRoomsNumberResource::collection(RealtyRoomsNumber::all()),
-            'realty' => new RealtyResource(Realty::with('metro', 'type', 'images', 'main_image')->find($id))
+            'rent_period' => RentPeriodResource::collection(RentPeriod::all()),
+            'realty' => new RealtyResource(Realty::with('metro', 'type', 'images', 'main_image', 'rent_period')->find($id))
         ]);
     }
 
@@ -109,6 +113,8 @@ class RealtyController extends Controller
         $realty->update($request->all());
 
         event(new RealtyCreated($realty, $request));
+
+        __('realty.create.input.rent_period.label');
 
         return \response(new RealtyResource($realty));
     }
