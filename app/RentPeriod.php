@@ -23,6 +23,6 @@ class RentPeriod extends Model
 
     public function realty()
     {
-        return $this->morphedByMany(Realty::class, 'rent_periodable');
+        return $this->morphedTo(Realty::class, 'rent_periodable');
     }
 }

@@ -28,17 +28,17 @@ class RealtyRequest extends FormRequest
             'description' => $this->input('description'),
             'price' => $this->input('price'),
             'sub_price' => $this->input('sub_price'),
-            'province' => $this->input('geo.province'),
-            'geo_area' => $this->input('geo.area'),
-            'city_id' => City::firstOrCreate(['name' => $this->input('geo.locality')])->id,
-            'vegetation' => $this->input('geo.vegetation'),
+            'city_id' => City::firstOrCreate([
+                'name' => $this->input('geo.locality'),
+                'province' => $this->input('geo.province')
+            ])->id,
             'district' => $this->input('geo.district'),
             'street' => $this->input('geo.street'),
             'house' => $this->input('geo.house'),
             'metro' => $this->input('geo.metro'),
             'images' => $this->input('images'),
             'main_image_id' => $this->input('main_image.id'),
-            'rent_period' => $this->input('rent_period'),
+            'rent_period_id' => $this->input('rent_period'),
         ]);
     }
 
@@ -54,9 +54,10 @@ class RealtyRequest extends FormRequest
             'rooms_number_id' => 'required',
             'price' => 'required|numeric',
             'sub_price' => 'numeric|nullable',
-            'street' => 'required',
+            'street' => 'required_without:district',
+            'district' => 'required_without:street',
             'main_image_id' => 'required_with:images',
-            'rent_period' => 'required',
+            'rent_period_id' => 'required',
         ];
     }
 
@@ -68,10 +69,11 @@ class RealtyRequest extends FormRequest
             'price.required' => __('validation.required', ['attribute' => __('realty.create.input.price.label')]),
             'price.numeric' => __('validation.numeric', ['attribute' => __('realty.create.input.price.label')]),
             'sub_price.numeric' => __('validation.numeric', ['attribute' => __('realty.create.input.sub_price.label')]),
-            'street.required' => __('realty.validation.street.required'),
+            'street.required_without' => __('realty.validation.street.required'),
+            'district.required_without' => __('realty.validation.street.required'),
             'images.required' => __('realty.validation.images.required'),
             'main_image_id.required_with' => __('realty.validation.main_image_id.required'),
-            'rent_period.required' => __('realty.validation.rent_period.required'),
+            'rent_period_id.required' => __('realty.validation.rent_period.required'),
         ];
     }
 }

@@ -42,7 +42,7 @@ class Realty extends JsonResource
             'city' => new CityResource($this->whenLoaded('city')),
             'url' => route('realty.show', ['realty' => $this->id]),
             'main_image' => new FileResource($this->whenLoaded('main_image')),
-            'rent_period' => RentPeriodResource::collection($this->whenLoaded('rent_period'))
+            'rent_period' => new RentPeriodResource($this->whenLoaded('rent_period'))
         ];
     }
 }

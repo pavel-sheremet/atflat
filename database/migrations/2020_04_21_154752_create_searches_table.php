@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRentPeriodableTable extends Migration
+class CreateSearchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateRentPeriodableTable extends Migration
      */
     public function up()
     {
-        Schema::create('rent_periodables', function (Blueprint $table) {
+        Schema::create('searches', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->bigInteger('rent_period_id')->unsigned()->nullable();
-            $table->bigInteger('rent_periodable_id')->unsigned()->nullable();
-            $table->string('rent_periodable_type')->nullable();
         });
     }
 
@@ -29,6 +26,6 @@ class CreateRentPeriodableTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rent_periodable');
+        Schema::dropIfExists('searches');
     }
 }

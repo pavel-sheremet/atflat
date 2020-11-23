@@ -51,21 +51,23 @@
                                         >
                                             <div class="form-check">
                                                 <label class="form-check-label">
-                                                    <input class="form-check-input"
-                                                           type="checkbox"
-                                                           v-model="realty.rent_period"
-                                                           v-bind:value="rent_period.id">
+                                                <input class="form-check-input"
+                                                       v-model="realty.rent_period"
+                                                       type="radio"
+                                                       :value="rent_period.id"
+                                                       name="rent_period"
+                                                >
                                                     {{ rent_period.name }}
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-if="FormErrors.errors.rent_period">
-                                        <small class="form-text text-danger" v-for="error in FormErrors.errors.rent_period">{{ error }}</small>
+                                    <div v-if="FormErrors.errors.rent_period_id">
+                                        <small class="form-text text-danger" v-for="error in FormErrors.errors.rent_period_id">{{ error }}</small>
                                     </div>
                                 </div>
 
-                                <div class="form-group col-sm-6">
+                                <div v-if="RealtyCreate.realty.type === 1" class="form-group col-sm-6">
                                     <label>{{ $t('realty.create.input.rooms_number.label') }}</label>
                                     <select v-model="realty.rooms_number" class="form-control">
                                         <option v-for="rooms_number in RealtyCreate.data.rooms_number"
@@ -76,8 +78,11 @@
                                         <small class="form-text text-danger" v-for="error in FormErrors.errors.rooms_number_id">{{ error }}</small>
                                     </div>
                                 </div>
-                                <div class="form-group col-sm-6">
-                                    <label>{{ $t('realty.create.input.price.label') }} ₽/месяц</label>
+
+                                <div v-if="RealtyCreate.realty.type && RealtyCreate.realty.rent_period" class="col-sm-6">
+                                    <label v-if="RealtyCreate.realty.rent_period === 2">{{ $t('realty.create.input.price.month.label') }}</label>
+                                    <label v-else-if="RealtyCreate.realty.rent_period === 1">{{ $t('realty.create.input.price.day.label') }}</label>
+                                    <label v-else>{{ $t('realty.create.input.price.label') }}</label>
                                     <input type="number"
                                            class="form-control"
                                            v-model="realty.price"
@@ -87,7 +92,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-sm-6">
+                                <div v-if="RealtyCreate.realty.type" class="form-group col-sm-6">
                                     <label>{{ $t('realty.create.input.sub_price.label') }}</label>
                                     <input type="number"
                                            class="form-control"
@@ -97,7 +102,8 @@
                                         <small class="form-text text-danger" v-for="error in FormErrors.errors.sub_price">{{ error }}</small>
                                     </div>
                                 </div>
-                                <div class="form-group col-sm-6">
+
+                                <div v-if="RealtyCreate.realty.type" class="form-group col-sm-6">
                                     <label>
                                         <span v-if="RealtyCreate.realty.type === 1">{{ $t('realty.create.input.area.flat.label') }}</span>
                                         <span v-else-if="RealtyCreate.realty.type === 2">{{ $t('realty.create.input.area.room.label') }}</span>
@@ -113,13 +119,19 @@
                                         <small class="form-text text-danger" v-for="error in FormErrors.errors.area">{{ error }}</small>
                                     </div>
                                 </div>
+
+                                <div v-if="RealtyCreate.realty.type" class="form-group col-12">
+                                    <label>{{ $t('realty.create.input.description.label') }}</label>
+                                    <textarea class="form-control"
+                                              v-model="realty.description"
+                                              rows="10"></textarea>
+                                </div>
                             </div>
 
                             <file-uploader-input-component
+                                v-if="RealtyCreate.realty.type"
                                 v-bind:errors="[FormErrors.errors.images, FormErrors.errors.main_image_id]"
                             ></file-uploader-input-component>
-
-
 
                             <div class="form-group">
                                 <div v-if="FormErrors.message">
@@ -127,16 +139,18 @@
                                 </div>
                             </div>
 
-
                             <button type="submit" class="btn btn-primary">
                                 {{ $t('main.form.save') }}
                             </button>
 
-
+                            <button v-if="RealtyCreate.realty.id"
+                                    @click.prevent="remove"
+                                    type="submit"
+                                    class="btn btn-danger">
+                                {{ $t('main.form.delete') }}
+                            </button>
 
                         </form>
-
-
 
                     </div>
                 </div>
@@ -155,6 +169,7 @@
         data() {
             return {
                 realty: {
+                    id: null,
                     type: null,
                     rooms_number: null,
                     rent_period: [],
@@ -170,7 +185,7 @@
                 },
             }
         },
-        props: ['data_url', 'save_url'],
+        props: ['data_url', 'save_url', 'destroy_url'],
         mounted() {
             this.fillData();
         },
@@ -197,6 +212,7 @@
                 'setRealtyType',
                 'setRealtyRoomsNumber',
                 'setRealtyDescription',
+                'setRealtyPriceDay',
                 'setRealtyPrice',
                 'setRealtySubPrice',
                 'setRealtyGeo',
@@ -208,14 +224,27 @@
                 'setRealtyData',
                 'setRealtyMainImage'
             ]),
+            remove ()
+            {
+                let success = confirm(this.$t('realty.create.delete.confirm'))
+
+                if (success)
+                {
+                    axios.post(this.destroy_url, this.RealtyCreate.realty.id)
+                    // .then(response => window.location.href = response.data.url)
+                        .then(response => {
+                            console.log(response);
+                        })
+                        // .catch(error => {
+                        //     this.$store.dispatch('FormErrors/fill', error.response.data);
+                        //     this.setLoadingStatus(false);
+                        // });
+                }
+            },
             async store ()
             {
                 await this.setLoadingStatus(true);
                 await this.$store.dispatch('FormErrors/clear');
-
-
-
-
                 await axios.post(this.save_url, this.RealtyCreate.realty)
                     // .then(response => window.location.href = response.data.url)
                     .then(response => {

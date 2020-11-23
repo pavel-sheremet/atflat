@@ -18,6 +18,7 @@ class CreateRealtiesTable extends Migration
             $table->timestamps();
             $table->boolean('active')->default(true);
             $table->bigInteger('type_id')->unsigned();
+            $table->bigInteger('rent_period_id')->unsigned();
             $table->bigInteger('main_image_id')->nullable()->unsigned();
             $table->double('price');
             $table->double('sub_price')->nullable();
@@ -28,12 +29,12 @@ class CreateRealtiesTable extends Migration
             $table->double('lat');
             $table->double('long');
 
-            $table->string('province')->nullable();
-            $table->string('geo_area')->nullable();
+//            $table->string('province')->nullable();
+//            $table->string('geo_area')->nullable();
             $table->bigInteger('city_id');
-            $table->string('vegetation')->nullable();
+//            $table->string('vegetation')->nullable();
             $table->string('district')->nullable();
-            $table->string('street');
+            $table->string('street')->nullable();
             $table->string('house')->nullable();
         });
     }

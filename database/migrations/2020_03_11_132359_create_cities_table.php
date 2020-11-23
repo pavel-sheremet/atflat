@@ -17,6 +17,9 @@ class CreateCitiesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->boolean('active')->default(true);
+//            $table->string('region')->nullable();
+//            $table->string('district')->nullable();
+            $table->string('province')->nullable();
             $table->string('name')->unique();
             $table->string('slug')->unique();
         });

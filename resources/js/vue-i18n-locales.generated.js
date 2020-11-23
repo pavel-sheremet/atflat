@@ -210,6 +210,7 @@ export default {
             "form": {
                 "save": "Сохранить",
                 "create": "Создать",
+                "delete": "Удалить",
                 "not_select": "Не выбрано",
                 "input": {
                     "file": {
@@ -524,6 +525,9 @@ export default {
             "nav": "Недвижимость",
             "rooms_number": "{0} Студия ::: [1,7] {value} ::: [8,*] {value} и более",
             "create": {
+                "delete": {
+                    "confirm": "Информация о данном объекте будет удалена безвозвратно! Подтвердить?"
+                },
                 "input": {
                     "address": {
                         "label": {
@@ -537,7 +541,19 @@ export default {
                         "label": "Количество комнат"
                     },
                     "price": {
-                        "label": "Арендная плата"
+                        "label": "Арендная плата ₽",
+                        "from": {
+                            "label": "От"
+                        },
+                        "to": {
+                            "label": "До"
+                        },
+                        "month": {
+                            "label": "Арендная плата ₽/месяц"
+                        },
+                        "day": {
+                            "label": "Арендная плата ₽/сутки"
+                        }
                     },
                     "sub_price": {
                         "label": "Залог"
@@ -560,6 +576,22 @@ export default {
                     }
                 }
             },
+            "search": {
+                "input": {
+                    "address": {
+                        "label": "Город"
+                    },
+                    "persons_number": {
+                        "label": "Количество проживающих"
+                    },
+                    "children_number": {
+                        "label": "Из них несовершеннолетних"
+                    },
+                    "additional_info": {
+                        "label": "Дополнительная информация"
+                    }
+                }
+            },
             "validation": {
                 "street": {
                     "required": "Необходимо указать корректный адрес"
@@ -569,6 +601,9 @@ export default {
                 },
                 "main_image_id": {
                     "required": "Необходимо выбрать основное фото"
+                },
+                "rent_period": {
+                    "required": "Необходимо выбрать срок аренды"
                 }
             },
             "title": {

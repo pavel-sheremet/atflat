@@ -12,20 +12,20 @@
         <ul class="navbar-nav w-100">
 
             <li class="nav-item @if (Route::currentRouteNamed('welcome')) active @endif">
-                <a class="nav-link" href="{{ route('welcome') }}">{{ __('menu.main') }}</a>
+                <a class="nav-link" href="{{ route('home') }}">{{ __('menu.main') }}</a>
             </li>
 
-            <li class="nav-item @if (Route::currentRouteNamed('realty')) active @endif">
-                <a class="nav-link" href="{{ route('realty') }}">{{ __('realty.nav') }}</a>
-            </li>
+{{--            <li class="nav-item @if (Route::currentRouteNamed('realty')) active @endif">--}}
+{{--                <a class="nav-link" href="{{ route('realty') }}">{{ __('realty.nav') }}</a>--}}
+{{--            </li>--}}
 
             <li class="nav-item @if (Route::currentRouteNamed('agency')) active @endif">
                 <a class="nav-link" href="{{ route('agency') }}">{{ __('agency.nav') }}</a>
             </li>
 
-            <li class="nav-item @if (Route::currentRouteNamed('agent')) active @endif">
-                <a class="nav-link" href="{{ route('agent') }}">{{ __('agent.page.index.nav') }}</a>
-            </li>
+{{--            <li class="nav-item @if (Route::currentRouteNamed('agent')) active @endif">--}}
+{{--                <a class="nav-link" href="{{ route('agent') }}">{{ __('agent.page.index.nav') }}</a>--}}
+{{--            </li>--}}
 
             <li class="nav-item mr-auto"></li>
 
@@ -52,9 +52,11 @@
                             <a class="dropdown-item" href="{{ route('register') }}">{{ __('menu.register') }}</a>
                         @endif
                     @else
-                        <a class="dropdown-item" href="{{ route('profile.agent') }}">{{ __('agent.page.profile.nav') }}</a>
-                        <a class="dropdown-item" href="{{ route('profile.agency') }}">{{ __('agency.page.profile.index.nav') }}</a>
-                        <a class="dropdown-item" href="{{ route('profile') }}">{{ __('user.page.profile.nav') }}</a>
+                        <a class="dropdown-item" href="{{ route('agent.profile') }}">{{ __('agent.page.profile.nav') }}</a>
+                        <a class="dropdown-item" href="{{ route('agency.profile') }}">{{ __('agency.page.profile.index.nav') }}</a>
+                        @if (Route::has('profile') && !Route::currentRouteNamed('profile'))
+                            <a class="dropdown-item" href="{{ route('profile') }}">{{ __('user.page.profile.nav') }}</a>
+                        @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('menu.logout') }}

@@ -25,14 +25,15 @@ class Realty extends Model
         'rooms_number_id',
         'lat',
         'long',
-        'province',
-        'geo_area',
+//        'province',
+//        'geo_area',
         'city_id',
-        'vegetation',
+//        'vegetation',
         'district',
         'street',
         'house',
-        'main_image_id'
+        'main_image_id',
+        'rent_period_id'
     ];
 
     protected static function boot()
@@ -93,7 +94,7 @@ class Realty extends Model
 
     public function rent_period ()
     {
-        return $this->morphToMany(RentPeriod::class, 'rent_periodable');
+        return $this->hasOne(RentPeriod::class, 'id', 'rent_period_id');
     }
 
     public function main_image()

@@ -24,7 +24,10 @@ const YandexMapHelper = {
     },
     getAddressByGeoCode (geocode, params = null)
     {
-        params = params || {results: 5, kind: 'house'};
+        params = {
+            results: params.results || 5,
+            kind: params.kind || 'house'
+        };
 
         return ymaps.geocode(geocode, params)
             .then(res => {

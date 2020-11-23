@@ -6,9 +6,9 @@ const MainStorage = {
     actions: {
         http (context, data)
         {
-            http(data.url, data.filter)
+            http(data.url, data.params)
                 .then(response => {
-                    context.dispatch(data.mutation, response.data, {root: true})
+                    context.dispatch(data.action, response.data, {root: true})
                 })
                 .catch(error => {
                     console.error(error)

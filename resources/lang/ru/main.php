@@ -6,7 +6,7 @@ return [
     'platform' => [
         'welcome' => 'Добро пожаловать на платформу ATFLAT.',
         'slogan' => 'Мы ищем и находим невижимость для Вас.',
-        'link_text' => 'Просто <a href="https://vk.com/atflat_group">оставьте заявку</a> на поиск и подбор недвижимости и мы начнем поиск.',
+        'link_text' => 'Просто <a href="'.route('realty.search.create').'">оставьте заявку</a> на поиск и подбор недвижимости и мы начнем поиск.',
     ],
     'common' => [
         'status' => [
@@ -16,6 +16,7 @@ return [
     'form' => [
         'save' => 'Сохранить',
         'create' => 'Создать',
+        'delete' => 'Удалить',
         'not_select' => 'Не выбрано',
         'input' => [
             'file' => [

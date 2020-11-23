@@ -18,6 +18,8 @@ class CreateRentPeriodsTable extends Migration
             $table->timestamps();
             $table->boolean('active')->default(true);
             $table->string('code')->unique()->required();
+//            $table->bigInteger('rent_period_id')->unsigned()->nullable();
+//            $table->bigInteger('rent_periodable_id')->unsigned()->nullable();
         });
     }
 

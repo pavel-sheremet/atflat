@@ -19,7 +19,7 @@
                                     @money_month($realty_item->price)
                                     @if ($realty_item->sub_price)
                                         <small class="text-muted">
-                                            {{ __('realty.create.input.sub_price.label') }} @money($realty_item->price)
+                                            {{ __('realty.create.input.sub_price.label') }} @money($realty_item->sub_price)
                                         </small>
                                     @endif
                                 </p>

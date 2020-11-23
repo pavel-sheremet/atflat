@@ -21,8 +21,5 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function profile()
-    {
-        return view('user.profile');
-    }
+
 }

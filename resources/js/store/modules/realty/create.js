@@ -1,6 +1,7 @@
 const RealtyCreate = {
     state: {
         realty: {
+            id: null,
             type: null,
             rooms_number: null,
             description: null,
@@ -20,7 +21,7 @@ const RealtyCreate = {
             success_route: '',
             main_image: null,
             images: [],
-            rent_period: []
+            rent_period: null
         },
 
         data: {
@@ -29,11 +30,19 @@ const RealtyCreate = {
             status: {
                 loading: true
             },
-            rent_period: []
+            rent_period: [],
+
         }
     },
 
     mutations: {
+        setRealtyId (state, data)
+        {
+            if (state.realty.id !== data)
+            {
+                state.realty.id = data;
+            }
+        },
         setRealtyType (state, data)
         {
             if (state.realty.type !== data)
@@ -151,6 +160,7 @@ const RealtyCreate = {
     actions: {
         setRealtyData (context, data)
         {
+            context.commit('RealtyCreate/setRealtyId', data.id, {root: true});
             context.commit('RealtyCreate/setRealtyType', data.type.id, {root: true});
             context.commit('RealtyCreate/setRealtyPrice', data.price, {root: true});
             context.commit('RealtyCreate/setRealtySubPrice', data.sub_price, {root: true});
@@ -158,10 +168,7 @@ const RealtyCreate = {
             context.commit('RealtyCreate/setRealtyDescription', data.description, {root: true});
             context.commit('RealtyCreate/setRealtyRoomsNumber', data.rooms.id, {root: true});
             context.commit('RealtyCreate/setRealtyImages', data.images, {root: true});
-            context.dispatch('RealtyCreate/setRealtyRentPeriod', data.rent_period, {root: true});
-
-            console.log(data)
-            // TODO: rent_period
+            context.commit('RealtyCreate/setRealtyRentPeriod', data.rent_period.id, {root: true});
         },
         setRealtyRentPeriod (context, data)
         {
@@ -175,6 +182,8 @@ const RealtyCreate = {
             }
         }
     },
+
+    getters: {},
 
     namespaced: true,
 };

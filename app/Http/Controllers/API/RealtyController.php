@@ -50,22 +50,7 @@ class RealtyController extends Controller
      */
     public function store(RealtyRequest $request)
     {
-        $realty = Realty::firstOrCreate([
-            'user_id' => $request->input('user_id'),
-            'type_id' => $request->input('type_id'),
-            'rooms_number_id' => $request->input('rooms_number_id'),
-            'description' => $request->input('description'),
-            'price' => $request->input('price'),
-            'sub_price' => $request->input('sub_price'),
-            'province' => $request->input('province'),
-            'geo_area' => $request->input('area'),
-            'city_id' => $request->input('city_id'),
-            'vegetation' => $request->input('vegetation'),
-            'district' => $request->input('district'),
-            'street' => $request->input('street'),
-            'house' => $request->input('house'),
-        ], $request->all());
-
+        $realty = \Auth::user()->realty()->create($request->all());
 
         event(new RealtyCreated($realty, $request));
 
@@ -95,7 +80,7 @@ class RealtyController extends Controller
             'type' => RealtyTypeResource::collection(RealtyType::all()),
             'rooms_number' => RealtyRoomsNumberResource::collection(RealtyRoomsNumber::all()),
             'rent_period' => RentPeriodResource::collection(RentPeriod::all()),
-            'realty' => new RealtyResource(Realty::with('metro', 'type', 'images', 'main_image', 'rent_period')->find($id))
+            'realty' => new RealtyResource(\Auth::user()->realty()->with('metro', 'type', 'images', 'main_image', 'rent_period')->find($id))
         ]);
     }
 
@@ -114,9 +99,7 @@ class RealtyController extends Controller
 
         event(new RealtyCreated($realty, $request));
 
-        __('realty.create.input.rent_period.label');
-
-        return \response(new RealtyResource($realty));
+        return response()->json(new RealtyResource($realty));
     }
 
     /**
@@ -127,6 +110,6 @@ class RealtyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return response()->json(\Auth::user()->realty()->find($id)->delete());
     }
 }

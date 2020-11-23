@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Realty;
 
 use App\Realty;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Http\Resources\Realty as RealtyResource;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 
 class RealtyController extends Controller
 {

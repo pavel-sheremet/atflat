@@ -13,7 +13,7 @@ use Eloquent;
  */
 class City extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'province'];
 
     protected static function boot()
     {

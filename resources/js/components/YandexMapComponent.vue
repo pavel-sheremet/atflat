@@ -42,11 +42,12 @@
 
                         <div class="form-group">
                             <yandex-map style="width: 100%; height: 400px"
-                                :settings="YandexMap.settings"
-                                :coords="YandexMap.coords"
-                                :controls="YandexMap.controls"
-                                :zoom="YandexMap.zoom"
-                                @map-was-initialized="init"
+                                        :settings="YandexMap.settings"
+                                        :coords="YandexMap.coords"
+                                        :controls="YandexMap.controls"
+                                        :zoom="YandexMap.props.zoom"
+                                        :scroll-zoom="YandexMap.props.scroll_zoom"
+                                        @map-was-initialized="init"
                             >
                                 <ymap-marker v-for="marker in YandexMap.markers" v-bind:key="marker.id"
                                              :coords="marker.coords"
@@ -65,7 +66,7 @@
 <script>
     import { yandexMap, ymapMarker } from 'vue-yandex-maps';
     import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-    import YandexMapHelper from "../store/modules/map/helper";
+    import YandexMapHelper from "../store/modules/map/yandex/helper";
 
     export default {
         name: "YandexMapComponent",
@@ -80,16 +81,21 @@
                 timerId: null
             }
         },
-        props: ['init_start_coords'],
+        props: [
+            'init_start_coords',
+            'kind',
+            'results',
+            'zoom',
+        ],
         computed: {
             ...mapState({
                 YandexMap: state => state.YandexMap
             }),
             ...mapGetters('YandexMap', [
                 'getAddressComponents',
-                'locality',
-                'street',
-                'house',
+                // 'locality',
+                // 'street',
+                // 'house',
             ])
         },
         watch: {
@@ -111,17 +117,24 @@
                 'setStatusLoading',
                 'setDropdownItems',
                 'showInputDropdown',
-                'setInputValue'
+                'setInputValue',
             ]),
             ...mapActions('YandexMap', [
                 'selectAddress',
                 'selectAddressByCoords',
+                'setProps'
             ]),
 
             async init (map)
             {
                 this.map = map;
 
+                this.setProps({
+                    init_start_coords: this.init_start_coords,
+                    kind: this.kind,
+                    result: this.result,
+                    zoom: this.zoom,
+                });
 
                 if (this.init_start_coords)
                 {
@@ -142,6 +155,7 @@
                         );
                 }
 
+
                 await this.map.events.add('click', async e => {
                     await this.selectAddressByCoords(e.get('coords'));
                 });
@@ -157,7 +171,10 @@
                 this.timerId = setTimeout(() => this.yaGeoCode(value), 1500);
             },
             async yaGeoCode (value) {
-                let items = await YandexMapHelper.getAddressByGeoCode(value);
+                let items = await YandexMapHelper.getAddressByGeoCode(value, {
+                    kind: this.kind,
+                    results: this.results
+                });
 
                 this.setDropdownItems(items);
                 this.showInputDropdown(true);

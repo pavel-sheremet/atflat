@@ -2,6 +2,13 @@ import YandexMapHelper from "./helper";
 
 const YandexMap = {
     state: {
+        props: {
+            init_start_coords: true,
+            kind: 'house',
+            result: 5,
+            zoom: 16,
+            scroll_zoom: false
+        },
         status: {
             loading: true
         },
@@ -13,7 +20,6 @@ const YandexMap = {
         },
         coords: [0,0],
         controls: ['geolocationControl', 'zoomControl'],
-        zoom: 16,
         selected: null,
         input: {
             value: '',
@@ -159,9 +165,16 @@ const YandexMap = {
         },
         setZoom (state, data)
         {
-            if (state.zoom !== data)
+            if (state.props.zoom !== data)
             {
-                state.zoom = data;
+                state.props.zoom = data;
+            }
+        },
+        setPropByCode (state, data)
+        {
+            if (state.props[data.code] !== data.value)
+            {
+                state.props[data.code] = data.value;
             }
         }
     },
@@ -170,7 +183,10 @@ const YandexMap = {
         selectAddressByCoords (context, data)
         {
             ymaps.ready(() => {
-                ymaps.geocode(data, {results: 1}).then(res => {
+                ymaps.geocode(data, {
+                    results: context.state.props.results,
+                    kind: context.state.props.kind,
+                }).then(res => {
 
                     let geoObject = res.geoObjects.get(0);
 
@@ -199,7 +215,7 @@ const YandexMap = {
         },
         setMarker (context, data)
         {
-            // TODO: fix marker id
+            // TODO: to do something with marker id
             context.commit('YandexMap/setMarkers', [{coords: data.coords, id: 'test'}], {root: true})
         },
         setAddress (context, data)
@@ -213,6 +229,16 @@ const YandexMap = {
             context.commit('YandexMap/setInputGeoStreet', context.getters.getAddressComponents('street'), {root: true});
             context.commit('YandexMap/setInputGeoHouse', context.getters.getAddressComponents('house'), {root: true});
             context.commit('YandexMap/setInputGeoCoords', data.coords, {root: true});
+        },
+        setProps (context, data)
+        {
+            for (let [key, value] of Object.entries(data).filter(item => item[1] !== undefined))
+            {
+                context.commit('YandexMap/setPropByCode', {
+                    code: key,
+                    value: value
+                }, {root: true});
+            }
         }
     },
 

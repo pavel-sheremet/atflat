@@ -24,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
         RealtyCreated::class => [
             CreateRealtyNearestMetro::class,
             AttachRealtyImages::class,
-            SyncRealtyRentPeriod::class
+//            SyncRealtyRentPeriod::class
         ]
     ];
 
